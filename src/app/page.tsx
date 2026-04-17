@@ -38,11 +38,9 @@ export default function Home() {
       <IntroSplash />
       <main
         id="top"
-        className="relative min-h-screen overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]"
+        className="site-shell relative min-h-screen overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]"
       >
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          <div className="moss-side moss-side--left" />
-          <div className="moss-side moss-side--right" />
           <div className="hero-haze" />
         </div>
 

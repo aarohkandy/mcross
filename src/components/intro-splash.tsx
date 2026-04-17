@@ -14,7 +14,7 @@ type Drop = {
   x: number;
 };
 
-const INTRO_DURATION_MS = 2550;
+const INTRO_DURATION_MS = 3200;
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -40,7 +40,7 @@ function shuffle<T>(items: T[]) {
 }
 
 function createDrops(width: number, height: number) {
-  const count = Math.max(18, Math.min(28, Math.round(width / 74)));
+  const count = Math.max(30, Math.min(52, Math.round(width / 36)));
   const slotWidth = width / count;
   const xPositions = shuffle(
     Array.from({ length: count }, (_, index) => {
@@ -50,18 +50,18 @@ function createDrops(width: number, height: number) {
   );
 
   return Array.from({ length: count }, (_, index): Drop => {
-    const radius = randomBetween(7, 15);
-    const baseDelay = (index / Math.max(count - 1, 1)) * 1260;
+    const radius = randomBetween(5.5, 12);
+    const baseDelay = (index / Math.max(count - 1, 1)) * 1680;
 
     return {
-      delay: Math.max(0, baseDelay + randomBetween(-85, 95)),
-      drift: randomBetween(-22, 22),
-      duration: randomBetween(980, 1680),
+      delay: Math.max(0, baseDelay + randomBetween(-70, 80)),
+      drift: randomBetween(-16, 16),
+      duration: randomBetween(1100, 1900),
       endY: height + randomBetween(height * 0.04, height * 0.16),
-      headFadeStart: randomBetween(height * 0.72, height * 0.86),
+      headFadeStart: randomBetween(height * 0.8, height * 0.92),
       highlight: randomBetween(0.22, 0.54),
       radius,
-      trailLength: randomBetween(height * 0.12, height * 0.24),
+      trailLength: randomBetween(height * 0.14, height * 0.26),
       x: clamp(xPositions[index], radius * 2, width - radius * 2),
     };
   });
@@ -249,7 +249,7 @@ export function IntroSplash() {
 
       drops.forEach((drop) => drawHighlight(drop, elapsed, height));
 
-      if (elapsed < INTRO_DURATION_MS - 220) {
+      if (elapsed < INTRO_DURATION_MS - 180) {
         animationFrame = window.requestAnimationFrame(render);
       }
     };
