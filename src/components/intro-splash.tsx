@@ -40,33 +40,44 @@ function shuffle<T>(items: T[]) {
 }
 
 function createDrops(width: number, height: number) {
-  const count = 5 + Math.floor(Math.random() * 3);
-  const slotWidth = width / count;
-  const xPositions = shuffle(
-    Array.from({ length: count }, (_, index) => {
-      const center = slotWidth * (index + 0.5);
-      return center + randomBetween(-slotWidth * 0.18, slotWidth * 0.18);
-    })
+  const count = 6 + Math.floor(Math.random() * 2);
+  const zones = [
+    { center: -0.03, jitter: 0.06 },
+    { center: 0.18, jitter: 0.1 },
+    { center: 0.34, jitter: 0.11 },
+    { center: 0.52, jitter: 0.13 },
+    { center: 0.72, jitter: 0.11 },
+    { center: 0.88, jitter: 0.1 },
+    { center: 1.03, jitter: 0.06 },
+  ];
+  const chosenZones = [zones[0], zones[1], zones[3], zones[5], zones[6]];
+  const clusterPool = [zones[1], zones[2], zones[3], zones[4], zones[5]];
+
+  while (chosenZones.length < count) {
+    chosenZones.push(clusterPool[Math.floor(Math.random() * clusterPool.length)]);
+  }
+
+  const xPositions = shuffle(chosenZones).map((zone) =>
+    clamp(
+      width * (zone.center + randomBetween(-zone.jitter, zone.jitter)),
+      -width * 0.08,
+      width * 1.08
+    )
   );
 
   return Array.from({ length: count }, (_, index): Drop => {
-    const radius = clamp(
-      slotWidth * randomBetween(0.42, 0.62),
-      28,
-      Math.max(92, width * 0.14)
-    );
-    const baseDelay = (index / Math.max(count - 1, 1)) * 720;
+    const radius = clamp(width * randomBetween(0.045, 0.075), 78, 156);
 
     return {
-      delay: Math.max(0, baseDelay + randomBetween(-45, 55)),
-      drift: randomBetween(-6, 6),
-      duration: randomBetween(720, 1080),
+      delay: randomBetween(0, 620),
+      drift: randomBetween(-7, 7),
+      duration: randomBetween(700, 980),
       endY: height + randomBetween(height * 0.04, height * 0.16),
-      headFadeStart: randomBetween(height * 0.92, height * 0.985),
+      headFadeStart: randomBetween(height * 0.9, height * 0.98),
       highlight: randomBetween(0.22, 0.54),
       radius,
-      trailLength: randomBetween(height * 0.34, height * 0.52),
-      x: clamp(xPositions[index], radius * 2, width - radius * 2),
+      trailLength: randomBetween(height * 0.36, height * 0.56),
+      x: clamp(xPositions[index], -radius * 0.35, width + radius * 0.35),
     };
   });
 }
@@ -169,7 +180,7 @@ export function IntroSplash() {
 
       context.strokeStyle = "rgba(0, 0, 0, 1)";
       context.fillStyle = "rgba(0, 0, 0, 1)";
-      context.lineWidth = drop.radius * 2.25;
+      context.lineWidth = drop.radius * 1.95;
       context.beginPath();
       context.moveTo(x, trailTop);
       context.lineTo(x, headY);
