@@ -14,7 +14,7 @@ type Drop = {
   x: number;
 };
 
-const INTRO_DURATION_MS = 3200;
+const INTRO_DURATION_MS = 2650;
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -40,7 +40,7 @@ function shuffle<T>(items: T[]) {
 }
 
 function createDrops(width: number, height: number) {
-  const count = Math.max(30, Math.min(52, Math.round(width / 36)));
+  const count = Math.max(36, Math.min(56, Math.round(width / 32)));
   const slotWidth = width / count;
   const xPositions = shuffle(
     Array.from({ length: count }, (_, index) => {
@@ -50,18 +50,18 @@ function createDrops(width: number, height: number) {
   );
 
   return Array.from({ length: count }, (_, index): Drop => {
-    const radius = randomBetween(5.5, 12);
-    const baseDelay = (index / Math.max(count - 1, 1)) * 1680;
+    const radius = randomBetween(8, 16);
+    const baseDelay = (index / Math.max(count - 1, 1)) * 1280;
 
     return {
-      delay: Math.max(0, baseDelay + randomBetween(-70, 80)),
-      drift: randomBetween(-16, 16),
-      duration: randomBetween(1100, 1900),
+      delay: Math.max(0, baseDelay + randomBetween(-60, 70)),
+      drift: randomBetween(-10, 10),
+      duration: randomBetween(840, 1380),
       endY: height + randomBetween(height * 0.04, height * 0.16),
-      headFadeStart: randomBetween(height * 0.8, height * 0.92),
+      headFadeStart: randomBetween(height * 0.84, height * 0.96),
       highlight: randomBetween(0.22, 0.54),
       radius,
-      trailLength: randomBetween(height * 0.14, height * 0.26),
+      trailLength: randomBetween(height * 0.18, height * 0.32),
       x: clamp(xPositions[index], radius * 2, width - radius * 2),
     };
   });
@@ -165,7 +165,7 @@ export function IntroSplash() {
 
       context.strokeStyle = "rgba(0, 0, 0, 1)";
       context.fillStyle = "rgba(0, 0, 0, 1)";
-      context.lineWidth = drop.radius * 1.45;
+      context.lineWidth = drop.radius * 1.65;
       context.beginPath();
       context.moveTo(x, trailTop);
       context.lineTo(x, headY);
