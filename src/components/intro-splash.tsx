@@ -14,7 +14,7 @@ type Drop = {
   x: number;
 };
 
-const INTRO_DURATION_MS = 2650;
+const INTRO_DURATION_MS = 2050;
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -40,28 +40,32 @@ function shuffle<T>(items: T[]) {
 }
 
 function createDrops(width: number, height: number) {
-  const count = Math.max(36, Math.min(56, Math.round(width / 32)));
+  const count = 5 + Math.floor(Math.random() * 3);
   const slotWidth = width / count;
   const xPositions = shuffle(
     Array.from({ length: count }, (_, index) => {
       const center = slotWidth * (index + 0.5);
-      return center + randomBetween(-slotWidth * 0.34, slotWidth * 0.34);
+      return center + randomBetween(-slotWidth * 0.18, slotWidth * 0.18);
     })
   );
 
   return Array.from({ length: count }, (_, index): Drop => {
-    const radius = randomBetween(8, 16);
-    const baseDelay = (index / Math.max(count - 1, 1)) * 1280;
+    const radius = clamp(
+      slotWidth * randomBetween(0.42, 0.62),
+      28,
+      Math.max(92, width * 0.14)
+    );
+    const baseDelay = (index / Math.max(count - 1, 1)) * 720;
 
     return {
-      delay: Math.max(0, baseDelay + randomBetween(-60, 70)),
-      drift: randomBetween(-10, 10),
-      duration: randomBetween(840, 1380),
+      delay: Math.max(0, baseDelay + randomBetween(-45, 55)),
+      drift: randomBetween(-6, 6),
+      duration: randomBetween(720, 1080),
       endY: height + randomBetween(height * 0.04, height * 0.16),
-      headFadeStart: randomBetween(height * 0.84, height * 0.96),
+      headFadeStart: randomBetween(height * 0.92, height * 0.985),
       highlight: randomBetween(0.22, 0.54),
       radius,
-      trailLength: randomBetween(height * 0.18, height * 0.32),
+      trailLength: randomBetween(height * 0.34, height * 0.52),
       x: clamp(xPositions[index], radius * 2, width - radius * 2),
     };
   });
@@ -165,7 +169,7 @@ export function IntroSplash() {
 
       context.strokeStyle = "rgba(0, 0, 0, 1)";
       context.fillStyle = "rgba(0, 0, 0, 1)";
-      context.lineWidth = drop.radius * 1.65;
+      context.lineWidth = drop.radius * 2.25;
       context.beginPath();
       context.moveTo(x, trailTop);
       context.lineTo(x, headY);
@@ -221,14 +225,6 @@ export function IntroSplash() {
       context.fill();
       context.globalAlpha = 1;
 
-      if (headFade <= 0.06) {
-        context.strokeStyle = "rgba(248, 253, 255, 0.08)";
-        context.lineWidth = Math.max(0.8, drop.radius * 0.12);
-        context.beginPath();
-        context.moveTo(x - drop.radius * 0.55, height - drop.radius * 0.28);
-        context.lineTo(x + drop.radius * 0.55, height - drop.radius * 0.28);
-        context.stroke();
-      }
     };
 
     const render = (timestamp: number) => {
