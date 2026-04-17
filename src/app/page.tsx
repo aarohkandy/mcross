@@ -1,9 +1,9 @@
 import { IntroSplash } from "@/components/intro-splash";
+import { SoftFloat } from "@/components/soft-float";
 
 const business = {
   phoneDisplay: "(555) 555-0199",
   phoneHref: "tel:+15555550199",
-  textHref: "sms:+15555550199",
   email: "quote@mcrossroofcleaning.com",
   serviceArea: "your area",
 };
@@ -18,17 +18,17 @@ const serviceSteps = [
   {
     title: "Inspect",
     description:
-      "We check the roof, note buildup, and map out the safest way to clean it.",
+      "We look over the roof, check the buildup, and map the safest clean before anything gets sprayed.",
   },
   {
     title: "Wash",
     description:
-      "Low-pressure treatment clears moss, algae, and stains without beating up the surface.",
+      "Low-pressure treatment breaks down moss, algae, and staining without hammering the roof surface.",
   },
   {
     title: "Finish",
     description:
-      "Edges are cleaned up, runoff is handled carefully, and the property looks sharp again.",
+      "We leave the roof sharp, the edges cleaned up, and the property looking fresh again.",
   },
 ];
 
@@ -36,164 +36,217 @@ export default function Home() {
   return (
     <>
       <IntroSplash />
-      <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-        <section className="relative isolate overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(138,255,102,0.18),_transparent_35%),linear-gradient(180deg,_rgba(255,255,255,0.04),_transparent_20%)]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
-          <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-6 sm:px-10 lg:px-16">
-            <header className="flex items-center justify-between border-b border-white/10 pb-5">
-              <div>
-                <p className="font-heading text-3xl tracking-[0.22em] text-white">
-                  MCROSS
-                </p>
-                <p className="text-xs uppercase tracking-[0.4em] text-white/45">
-                  Roof Cleaning
-                </p>
-              </div>
+      <main
+        id="top"
+        className="relative min-h-screen overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]"
+      >
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          <div className="moss-side moss-side--left" />
+          <div className="moss-side moss-side--right" />
+          <div className="hero-haze" />
+        </div>
+
+        <section className="relative z-10 min-h-screen px-[clamp(1.2rem,3vw,3rem)] pt-5 pb-12 sm:pt-7">
+          <header className="flex items-start justify-between gap-6">
+            <div>
+              <p className="font-heading text-[clamp(2.8rem,4vw,4.4rem)] leading-none tracking-[0.18em] text-white">
+                MCROSS
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-[0.42em] text-white/42 sm:text-sm">
+                Roof Cleaning
+              </p>
+            </div>
+
+            <div className="hidden items-center gap-3 md:flex">
               <a
                 href={business.phoneHref}
-                className="rounded-full border border-white/15 px-4 py-2 text-sm uppercase tracking-[0.24em] text-white transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                className="rounded-full bg-white/[0.05] px-5 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white transition hover:bg-white/12"
               >
-                Call Now
+                Call
               </a>
-            </header>
+              <a
+                href={`mailto:${business.email}`}
+                className="rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-black transition hover:bg-white"
+              >
+                Email
+              </a>
+            </div>
+          </header>
 
-            <div className="flex flex-1 flex-col justify-center gap-14 py-14 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-              <div className="max-w-3xl">
-                <p className="mb-4 text-sm uppercase tracking-[0.45em] text-[var(--accent)]">
-                  Clean Roof. Clean Finish.
-                </p>
-                <h1 className="max-w-4xl font-heading text-[clamp(4.5rem,12vw,9rem)] leading-[0.86] tracking-[0.04em] text-white">
-                  Roof cleaning that looks sharp and stays simple.
-                </h1>
-                <p className="mt-6 max-w-xl text-lg leading-8 text-white/70 sm:text-xl">
-                  We remove moss, algae, grime, and black streaks with a soft
-                  wash approach that keeps the roof safe and the house looking
-                  expensive again.
-                </p>
+          <div className="grid min-h-[calc(100svh-6.8rem)] gap-10 pt-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(26rem,0.8fr)] lg:items-center lg:gap-14 xl:gap-20">
+            <div className="max-w-[78rem]">
+              <p className="text-sm uppercase tracking-[0.48em] text-[var(--accent)] sm:text-base">
+                Clean Roof. Clean Finish.
+              </p>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href={business.phoneHref}
-                    className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-black transition hover:bg-white"
-                  >
-                    Call for a Quote
-                  </a>
-                  <a
-                    href={business.textHref}
-                    className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white transition hover:border-white hover:bg-white/6"
-                  >
-                    Text Roof Photos
-                  </a>
-                </div>
+              <h1 className="mt-5 font-heading text-[clamp(4rem,7.5vw,8.2rem)] leading-[0.9] tracking-[0.035em] text-white">
+                <span className="block whitespace-nowrap">Roof Cleaning</span>
+                <span className="block whitespace-nowrap text-white/92">
+                  That Looks Sharp
+                </span>
+                <span className="block whitespace-nowrap">And Stays Simple.</span>
+              </h1>
 
-                <div className="mt-10 grid gap-3 sm:grid-cols-3">
-                  {trustPoints.map((point) => (
-                    <p
-                      key={point}
-                      className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm uppercase tracking-[0.18em] text-white/75"
-                    >
-                      {point}
-                    </p>
-                  ))}
-                </div>
+              <p className="mt-7 max-w-[48rem] text-[clamp(1.05rem,1.45vw,1.36rem)] leading-[1.75] text-white/72">
+                We remove moss, algae, grime, and black streaks with a soft
+                wash approach that keeps the roof safe and the house looking
+                clean, expensive, and looked-after again.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-black transition hover:bg-white"
+                >
+                  Sign Up
+                </a>
+                <a
+                  href={business.phoneHref}
+                  className="inline-flex items-center justify-center rounded-full bg-white/[0.06] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white transition hover:bg-white/[0.12]"
+                >
+                  Call
+                </a>
+                <a
+                  href={`mailto:${business.email}`}
+                  className="inline-flex items-center justify-center rounded-full bg-white/[0.06] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white transition hover:bg-white/[0.12]"
+                >
+                  Email
+                </a>
               </div>
 
-              <aside className="w-full max-w-sm rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm">
-                <p className="text-xs uppercase tracking-[0.38em] text-white/45">
-                  Quick Read
+              <div className="mt-10 grid max-w-[62rem] gap-3 md:grid-cols-3">
+                {trustPoints.map((point) => (
+                  <div
+                    key={point}
+                    className="rounded-[1.6rem] bg-white/[0.045] px-4 py-4 text-sm uppercase tracking-[0.2em] text-white/76 shadow-[0_22px_70px_rgba(0,0,0,0.18)]"
+                  >
+                    {point}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-full lg:justify-self-end">
+              <div className="rounded-[2.3rem] bg-[linear-gradient(180deg,rgba(150,180,120,0.2),rgba(255,255,255,0.05))] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
+                <p className="text-xs uppercase tracking-[0.38em] text-[var(--accent)]">
+                  Fast Quote
                 </p>
-                <div className="mt-6 space-y-5">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-white/40">
+                <h2 className="mt-4 font-heading text-[clamp(2.6rem,4.4vw,5rem)] leading-[0.9] tracking-[0.08em] text-white">
+                  Book the roof wash without the runaround.
+                </h2>
+                <p className="mt-4 max-w-[30rem] text-base leading-7 text-white/68">
+                  Keep it simple: send a photo, make the call, or email the
+                  address below and get the ball rolling fast.
+                </p>
+
+                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-[1.5rem] bg-black/26 px-5 py-5">
+                    <p className="text-xs uppercase tracking-[0.35em] text-white/36">
                       Service Area
                     </p>
                     <p className="mt-2 text-2xl text-white">
                       {business.serviceArea}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-white/40">
+                  <div className="rounded-[1.5rem] bg-black/26 px-5 py-5">
+                    <p className="text-xs uppercase tracking-[0.35em] text-white/36">
                       Best For
                     </p>
-                    <p className="mt-2 text-base leading-7 text-white/70">
-                      Asphalt shingles, mossy roofs, dark algae streaks, and
-                      curb appeal cleanups before listing or repainting.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-white/40">
-                      Response
-                    </p>
-                    <p className="mt-2 text-base leading-7 text-white/70">
-                      Call or text photos. Keep it fast, direct, and easy to
-                      quote.
+                    <p className="mt-2 text-base leading-7 text-white/72">
+                      Mossy shingles, algae stains, curb appeal cleanups, and
+                      pre-sale refreshes.
                     </p>
                   </div>
                 </div>
-              </aside>
+
+                <div className="mt-7 space-y-3">
+                  <a
+                    href="#contact"
+                    className="block rounded-[1.4rem] bg-[var(--accent)] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.24em] text-black transition hover:bg-white"
+                  >
+                    Sign Up
+                  </a>
+                  <a
+                    href={business.phoneHref}
+                    className="block rounded-[1.4rem] bg-white/[0.07] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.24em] text-white transition hover:bg-white/[0.12]"
+                  >
+                    {business.phoneDisplay}
+                  </a>
+                  <a
+                    href={`mailto:${business.email}`}
+                    className="block rounded-[1.4rem] bg-white/[0.07] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white/[0.12]"
+                  >
+                    {business.email}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-black/80">
-          <div className="mx-auto grid max-w-6xl gap-6 px-6 py-10 sm:px-10 lg:grid-cols-3 lg:px-16">
+        <section className="relative z-10 px-[clamp(1.2rem,3vw,3rem)] pb-6">
+          <div className="grid gap-4 xl:grid-cols-3">
             {serviceSteps.map((step, index) => (
-              <article
-                key={step.title}
-                className="rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6"
-              >
-                <p className="text-xs uppercase tracking-[0.4em] text-[var(--accent)]">
-                  0{index + 1}
-                </p>
-                <h2 className="mt-4 font-heading text-4xl tracking-[0.08em] text-white">
-                  {step.title}
-                </h2>
-                <p className="mt-4 text-base leading-7 text-white/70">
-                  {step.description}
-                </p>
-              </article>
+              <SoftFloat key={step.title} delayMs={index * 85}>
+                <article className="h-full rounded-[2rem] bg-white/[0.045] p-7 shadow-[0_26px_90px_rgba(0,0,0,0.22)]">
+                  <p className="text-xs uppercase tracking-[0.42em] text-[var(--accent)]">
+                    0{index + 1}
+                  </p>
+                  <h2 className="mt-4 font-heading text-[clamp(2.8rem,3vw,4.2rem)] leading-[0.92] tracking-[0.08em] text-white">
+                    {step.title}
+                  </h2>
+                  <p className="mt-4 max-w-[28rem] text-base leading-8 text-white/70">
+                    {step.description}
+                  </p>
+                </article>
+              </SoftFloat>
             ))}
           </div>
         </section>
 
-        <section
-          id="contact"
-          className="mx-auto max-w-6xl px-6 py-16 sm:px-10 lg:px-16 lg:py-20"
-        >
-          <div className="rounded-[2.2rem] border border-[var(--accent)]/35 bg-[linear-gradient(180deg,rgba(138,255,102,0.12),rgba(255,255,255,0.03))] p-8 sm:p-10 lg:flex lg:items-end lg:justify-between lg:gap-10">
-            <div className="max-w-2xl">
+        <SoftFloat className="relative z-10 px-[clamp(1.2rem,3vw,3rem)] pb-20" delayMs={60}>
+          <section
+            id="contact"
+            className="rounded-[2.5rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(150,180,120,0.12))] p-8 shadow-[0_30px_110px_rgba(0,0,0,0.32)] sm:p-10 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(23rem,0.85fr)] lg:gap-10"
+          >
+            <div>
               <p className="text-xs uppercase tracking-[0.45em] text-[var(--accent)]">
                 Ready When You Are
               </p>
-              <h2 className="mt-4 font-heading text-[clamp(3rem,8vw,5rem)] leading-[0.9] tracking-[0.08em] text-white">
-                Need the roof cleaned? Reach out and book it.
+              <h2 className="mt-4 font-heading text-[clamp(3.2rem,5vw,6rem)] leading-[0.9] tracking-[0.08em] text-white">
+                Need the roof cleaned? Reach out and lock it in.
               </h2>
-              <p className="mt-4 text-base leading-7 text-white/70 sm:text-lg">
-                This site is intentionally stripped down: one clear service,
-                one clean message, and one easy next step.
+              <p className="mt-5 max-w-[42rem] text-base leading-8 text-white/70 sm:text-lg">
+                No clutter, no extra pitch, no maze. Just a clean roof-cleaning
+                site with a clear next step and a calmer scroll.
               </p>
             </div>
 
-            <div className="mt-8 space-y-3 lg:mt-0 lg:min-w-[18rem]">
+            <div className="mt-8 space-y-3 lg:mt-0">
+              <a
+                href="#top"
+                className="block rounded-[1.45rem] bg-[var(--accent)] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.24em] text-black transition hover:bg-white"
+              >
+                Sign Up
+              </a>
               <a
                 href={business.phoneHref}
-                className="block rounded-2xl border border-white/12 bg-black/45 px-5 py-4 text-base text-white transition hover:border-white/30"
+                className="block rounded-[1.45rem] bg-black/28 px-5 py-4 text-center text-base text-white transition hover:bg-black/40"
               >
                 {business.phoneDisplay}
               </a>
               <a
                 href={`mailto:${business.email}`}
-                className="block rounded-2xl border border-white/12 bg-black/45 px-5 py-4 text-base text-white transition hover:border-white/30"
+                className="block rounded-[1.45rem] bg-black/28 px-5 py-4 text-center text-base text-white transition hover:bg-black/40"
               >
                 {business.email}
               </a>
-              <p className="rounded-2xl border border-white/12 bg-black/45 px-5 py-4 text-base text-white/70">
+              <p className="rounded-[1.45rem] bg-black/22 px-5 py-4 text-base text-white/72">
                 Serving {business.serviceArea}
               </p>
             </div>
-          </div>
-        </section>
+          </section>
+        </SoftFloat>
       </main>
     </>
   );

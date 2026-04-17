@@ -8,8 +8,8 @@ type Drop = {
   duration: number;
   endY: number;
   highlight: number;
+  headFadeStart: number;
   radius: number;
-  splashWidth: number;
   trailLength: number;
   x: number;
 };
@@ -58,9 +58,9 @@ function createDrops(width: number, height: number) {
       drift: randomBetween(-22, 22),
       duration: randomBetween(980, 1680),
       endY: height + randomBetween(height * 0.04, height * 0.16),
+      headFadeStart: randomBetween(height * 0.72, height * 0.86),
       highlight: randomBetween(0.22, 0.54),
       radius,
-      splashWidth: randomBetween(radius * 2.4, radius * 4.8),
       trailLength: randomBetween(height * 0.12, height * 0.24),
       x: clamp(xPositions[index], radius * 2, width - radius * 2),
     };
@@ -157,6 +157,11 @@ export function IntroSplash() {
       const x = drop.x + drop.drift * eased;
       const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
       const trailTop = -drop.radius * 2;
+      const headFade = clamp(
+        1 - (headY - drop.headFadeStart) / (height * 0.18),
+        0,
+        1
+      );
 
       context.strokeStyle = "rgba(0, 0, 0, 1)";
       context.fillStyle = "rgba(0, 0, 0, 1)";
@@ -166,24 +171,12 @@ export function IntroSplash() {
       context.lineTo(x, headY);
       context.stroke();
 
-      context.beginPath();
-      context.arc(x, headY, drop.radius * 1.22, 0, Math.PI * 2);
-      context.fill();
-
-      if (progress > 0.78) {
-        const splashProgress = (progress - 0.78) / 0.22;
-        const splashY = Math.min(headY + drop.radius * 0.6, height - drop.radius);
+      if (headFade > 0.06) {
         context.beginPath();
-        context.ellipse(
-          x,
-          splashY,
-          drop.splashWidth * splashProgress,
-          drop.radius * 0.62 * (1 - splashProgress * 0.22),
-          0,
-          0,
-          Math.PI * 2
-        );
+        context.globalAlpha = headFade;
+        context.arc(x, headY, drop.radius * 1.08, 0, Math.PI * 2);
         context.fill();
+        context.globalAlpha = 1;
       }
     };
 
@@ -200,6 +193,11 @@ export function IntroSplash() {
       const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
       const trailTop = Math.max(headY - drop.trailLength * 0.3, -drop.radius * 2);
       const bodyAlpha = drop.highlight * (1 - progress * 0.18);
+      const headFade = clamp(
+        1 - (headY - drop.headFadeStart) / (height * 0.18),
+        0,
+        1
+      );
 
       context.strokeStyle = `rgba(228, 247, 255, ${bodyAlpha})`;
       context.lineWidth = Math.max(1.4, drop.radius * 0.3);
@@ -219,23 +217,16 @@ export function IntroSplash() {
         0,
         Math.PI * 2
       );
+      context.globalAlpha = headFade;
       context.fill();
+      context.globalAlpha = 1;
 
-      if (progress > 0.78) {
-        const splashProgress = (progress - 0.78) / 0.22;
-        const splashY = Math.min(headY + drop.radius * 0.6, height - drop.radius);
-        context.strokeStyle = `rgba(240, 252, 255, ${0.16 * (1 - splashProgress)})`;
-        context.lineWidth = Math.max(1, drop.radius * 0.18);
+      if (headFade <= 0.06) {
+        context.strokeStyle = "rgba(248, 253, 255, 0.08)";
+        context.lineWidth = Math.max(0.8, drop.radius * 0.12);
         context.beginPath();
-        context.ellipse(
-          x,
-          splashY,
-          drop.splashWidth * 0.42 * splashProgress,
-          drop.radius * 0.18,
-          0,
-          0,
-          Math.PI * 2
-        );
+        context.moveTo(x - drop.radius * 0.55, height - drop.radius * 0.28);
+        context.lineTo(x + drop.radius * 0.55, height - drop.radius * 0.28);
         context.stroke();
       }
     };
