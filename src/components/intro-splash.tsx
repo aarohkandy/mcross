@@ -24,22 +24,45 @@ function easeOutQuart(value: number) {
   return 1 - (1 - value) ** 4;
 }
 
-function createDrops(width: number, height: number) {
-  const count = Math.max(12, Math.min(18, Math.round(width / 96)));
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
 
-  return Array.from({ length: count }, (): Drop => {
+function shuffle<T>(items: T[]) {
+  const copy = [...items];
+
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+
+  return copy;
+}
+
+function createDrops(width: number, height: number) {
+  const count = Math.max(18, Math.min(28, Math.round(width / 74)));
+  const slotWidth = width / count;
+  const xPositions = shuffle(
+    Array.from({ length: count }, (_, index) => {
+      const center = slotWidth * (index + 0.5);
+      return center + randomBetween(-slotWidth * 0.34, slotWidth * 0.34);
+    })
+  );
+
+  return Array.from({ length: count }, (_, index): Drop => {
     const radius = randomBetween(7, 15);
+    const baseDelay = (index / Math.max(count - 1, 1)) * 1260;
 
     return {
-      delay: randomBetween(40, 980),
+      delay: Math.max(0, baseDelay + randomBetween(-85, 95)),
       drift: randomBetween(-22, 22),
-      duration: randomBetween(920, 1620),
+      duration: randomBetween(980, 1680),
       endY: height + randomBetween(height * 0.04, height * 0.16),
       highlight: randomBetween(0.22, 0.54),
       radius,
       splashWidth: randomBetween(radius * 2.4, radius * 4.8),
-      trailLength: randomBetween(height * 0.16, height * 0.34),
-      x: randomBetween(radius * 2, width - radius * 2),
+      trailLength: randomBetween(height * 0.12, height * 0.24),
+      x: clamp(xPositions[index], radius * 2, width - radius * 2),
     };
   });
 }
@@ -133,7 +156,7 @@ export function IntroSplash() {
       const eased = easeOutQuart(progress);
       const x = drop.x + drop.drift * eased;
       const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
-      const trailTop = headY - drop.trailLength;
+      const trailTop = -drop.radius * 2;
 
       context.strokeStyle = "rgba(0, 0, 0, 1)";
       context.fillStyle = "rgba(0, 0, 0, 1)";
@@ -175,7 +198,7 @@ export function IntroSplash() {
       const eased = easeOutQuart(progress);
       const x = drop.x + drop.drift * eased;
       const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
-      const trailTop = Math.max(headY - drop.trailLength * 0.58, -drop.radius * 2);
+      const trailTop = Math.max(headY - drop.trailLength * 0.3, -drop.radius * 2);
       const bodyAlpha = drop.highlight * (1 - progress * 0.18);
 
       context.strokeStyle = `rgba(228, 247, 255, ${bodyAlpha})`;
