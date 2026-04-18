@@ -2,16 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type Drop = {
+type WashSection = {
+  curveDepth: number;
   delay: number;
-  drift: number;
   duration: number;
-  endY: number;
-  highlight: number;
-  headFadeStart: number;
-  radius: number;
-  trailLength: number;
-  x: number;
+  left: number;
+  right: number;
+  targetY: number;
 };
 
 const INTRO_DURATION_MS = 2050;
@@ -28,56 +25,21 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
-function shuffle<T>(items: T[]) {
-  const copy = [...items];
+function createWashSections(width: number, height: number) {
+  const count = clamp(Math.round(width / 180), 6, 8);
+  const slotWidth = width / count;
+  const overlap = slotWidth * 0.12;
 
-  for (let index = copy.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1));
-    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
-  }
-
-  return copy;
-}
-
-function createDrops(width: number, height: number) {
-  const count = 6 + Math.floor(Math.random() * 2);
-  const zones = [
-    { center: -0.03, jitter: 0.06 },
-    { center: 0.18, jitter: 0.1 },
-    { center: 0.34, jitter: 0.11 },
-    { center: 0.52, jitter: 0.13 },
-    { center: 0.72, jitter: 0.11 },
-    { center: 0.88, jitter: 0.1 },
-    { center: 1.03, jitter: 0.06 },
-  ];
-  const chosenZones = [zones[0], zones[1], zones[3], zones[5], zones[6]];
-  const clusterPool = [zones[1], zones[2], zones[3], zones[4], zones[5]];
-
-  while (chosenZones.length < count) {
-    chosenZones.push(clusterPool[Math.floor(Math.random() * clusterPool.length)]);
-  }
-
-  const xPositions = shuffle(chosenZones).map((zone) =>
-    clamp(
-      width * (zone.center + randomBetween(-zone.jitter, zone.jitter)),
-      -width * 0.08,
-      width * 1.08
-    )
-  );
-
-  return Array.from({ length: count }, (_, index): Drop => {
-    const radius = clamp(width * randomBetween(0.045, 0.075), 78, 156);
+  return Array.from({ length: count }, (_, index): WashSection => {
+    const curveDepth = clamp(slotWidth * 0.2, 28, 64);
 
     return {
-      delay: randomBetween(0, 620),
-      drift: randomBetween(-7, 7),
-      duration: randomBetween(700, 980),
-      endY: height + randomBetween(height * 0.04, height * 0.16),
-      headFadeStart: randomBetween(height * 0.9, height * 0.98),
-      highlight: randomBetween(0.22, 0.54),
-      radius,
-      trailLength: randomBetween(height * 0.36, height * 0.56),
-      x: clamp(xPositions[index], -radius * 0.35, width + radius * 0.35),
+      curveDepth,
+      delay: Math.max(0, index * 35 + randomBetween(-18, 18)),
+      duration: randomBetween(820, 980),
+      left: index * slotWidth - overlap * 0.5,
+      right: (index + 1) * slotWidth + overlap * 0.5,
+      targetY: height + curveDepth + 28,
     };
   });
 }
@@ -115,8 +77,9 @@ export function IntroSplash() {
 
     let animationFrame = 0;
     let startTime = 0;
+    let revealCompleteAt = 0;
     let viewport = { height: 0, width: 0 };
-    let drops: Drop[] = [];
+    let sections: WashSection[] = [];
 
     const resizeCanvas = () => {
       const bounds = canvas.getBoundingClientRect();
@@ -128,10 +91,12 @@ export function IntroSplash() {
 
       context.setTransform(1, 0, 0, 1, 0, 0);
       context.scale(dpr, dpr);
-      context.lineCap = "round";
-      context.lineJoin = "round";
 
-      drops = createDrops(bounds.width, bounds.height);
+      sections = createWashSections(bounds.width, bounds.height);
+      revealCompleteAt = sections.reduce(
+        (max, section) => Math.max(max, section.delay + section.duration),
+        0
+      );
     };
 
     const drawOverlay = (width: number, height: number) => {
@@ -160,82 +125,37 @@ export function IntroSplash() {
       context.fillRect(0, 0, width, height);
     };
 
-    const drawCutout = (drop: Drop, elapsed: number, height: number) => {
-      const localElapsed = elapsed - drop.delay;
+    const drawWashSection = (section: WashSection, elapsed: number) => {
+      const localElapsed = elapsed - section.delay;
 
       if (localElapsed <= 0) {
         return;
       }
 
-      const progress = Math.min(localElapsed / drop.duration, 1);
+      const progress = Math.min(localElapsed / section.duration, 1);
       const eased = easeOutQuart(progress);
-      const x = drop.x + drop.drift * eased;
-      const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
-      const trailTop = -drop.radius * 2;
-      const headFade = clamp(
-        1 - (headY - drop.headFadeStart) / (height * 0.18),
-        0,
-        1
-      );
+      const headY = -section.curveDepth + section.targetY * eased;
+      const centerX = (section.left + section.right) * 0.5;
+      const topY = -4;
 
-      context.strokeStyle = "rgba(0, 0, 0, 1)";
-      context.fillStyle = "rgba(0, 0, 0, 1)";
-      context.lineWidth = drop.radius * 1.95;
       context.beginPath();
-      context.moveTo(x, trailTop);
-      context.lineTo(x, headY);
-      context.stroke();
-
-      if (headFade > 0.06) {
-        context.beginPath();
-        context.globalAlpha = headFade;
-        context.arc(x, headY, drop.radius * 1.08, 0, Math.PI * 2);
-        context.fill();
-        context.globalAlpha = 1;
-      }
-    };
-
-    const drawHighlight = (drop: Drop, elapsed: number, height: number) => {
-      const localElapsed = elapsed - drop.delay;
-
-      if (localElapsed <= 0) {
-        return;
-      }
-
-      const progress = Math.min(localElapsed / drop.duration, 1);
-      const eased = easeOutQuart(progress);
-      const x = drop.x + drop.drift * eased;
-      const headY = -drop.trailLength + (drop.endY + drop.trailLength) * eased;
-      const trailTop = Math.max(headY - drop.trailLength * 0.3, -drop.radius * 2);
-      const bodyAlpha = drop.highlight * (1 - progress * 0.18);
-      const headFade = clamp(
-        1 - (headY - drop.headFadeStart) / (height * 0.18),
-        0,
-        1
+      context.moveTo(section.left, topY);
+      context.lineTo(section.left, headY);
+      context.quadraticCurveTo(
+        section.left,
+        headY + section.curveDepth,
+        centerX,
+        headY + section.curveDepth
       );
-
-      context.strokeStyle = `rgba(228, 247, 255, ${bodyAlpha})`;
-      context.lineWidth = Math.max(1.4, drop.radius * 0.3);
-      context.beginPath();
-      context.moveTo(x, trailTop);
-      context.lineTo(x, headY);
-      context.stroke();
-
-      context.fillStyle = `rgba(248, 253, 255, ${0.22 + drop.highlight * 0.5})`;
-      context.beginPath();
-      context.ellipse(
-        x,
-        headY,
-        drop.radius * 0.54,
-        drop.radius * 0.82,
-        0,
-        0,
-        Math.PI * 2
+      context.quadraticCurveTo(
+        section.right,
+        headY + section.curveDepth,
+        section.right,
+        headY
       );
-      context.globalAlpha = headFade;
+      context.lineTo(section.right, topY);
+      context.closePath();
       context.fill();
-      context.globalAlpha = 1;
-
     };
 
     const render = (timestamp: number) => {
@@ -251,10 +171,13 @@ export function IntroSplash() {
 
       context.save();
       context.globalCompositeOperation = "destination-out";
-      drops.forEach((drop) => drawCutout(drop, elapsed, height));
+      context.fillStyle = "rgba(0, 0, 0, 1)";
+      sections.forEach((section) => drawWashSection(section, elapsed));
       context.restore();
 
-      drops.forEach((drop) => drawHighlight(drop, elapsed, height));
+      if (elapsed >= revealCompleteAt + 120) {
+        context.clearRect(0, 0, width, height);
+      }
 
       if (elapsed < INTRO_DURATION_MS - 180) {
         animationFrame = window.requestAnimationFrame(render);
@@ -279,6 +202,7 @@ export function IntroSplash() {
     <div
       aria-hidden="true"
       className="intro-overlay pointer-events-none fixed inset-0 z-50 overflow-hidden"
+      style={{ animationDuration: `${INTRO_DURATION_MS}ms` }}
     >
       <canvas ref={canvasRef} className="intro-canvas h-full w-full" />
     </div>
