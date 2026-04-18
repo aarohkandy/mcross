@@ -31,7 +31,7 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-8 py-6 lg:grid-cols-[minmax(0,1fr)_minmax(31rem,38rem)] lg:gap-12">
+          <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-8 py-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(36rem,44rem)] lg:gap-14">
             <div className="relative flex min-h-[52svh] items-end overflow-hidden rounded-[2.6rem] lg:min-h-[calc(100svh-10.75rem)]">
               <HeroBackdrop />
 
@@ -44,9 +44,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative flex items-center justify-end lg:pl-2">
+            <div className="relative flex items-center justify-end lg:pl-1">
               <div aria-hidden="true" className="form-aura pointer-events-none absolute inset-[-12%]" />
-              <div className="relative z-10 w-full max-w-[38rem]">
+              <div className="relative z-10 w-full max-w-[44rem]">
                 <ContactForm
                   email={business.email}
                   phoneDisplay={business.phoneDisplay}
