@@ -25,21 +25,72 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
+function shuffle<T>(items: T[]) {
+  const copy = [...items];
+
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+
+  return copy;
+}
+
+function createSectionDelays(count: number) {
+  const slotStep = 58;
+  const minNeighborGap = 96;
+  const remaining = shuffle(
+    Array.from({ length: count }, (_, index) => index * slotStep)
+  );
+  const ordered: number[] = [];
+
+  while (remaining.length > 0) {
+    if (ordered.length === 0) {
+      ordered.push(remaining.pop() ?? 0);
+      continue;
+    }
+
+    const previous = ordered[ordered.length - 1];
+    let candidateIndex = -1;
+    let bestGap = -1;
+
+    for (let index = 0; index < remaining.length; index += 1) {
+      const gap = Math.abs(remaining[index] - previous);
+
+      if (gap >= minNeighborGap) {
+        candidateIndex = index;
+        break;
+      }
+
+      if (gap > bestGap) {
+        bestGap = gap;
+        candidateIndex = index;
+      }
+    }
+
+    const [chosenDelay] = remaining.splice(candidateIndex, 1);
+    ordered.push(chosenDelay);
+  }
+
+  return ordered.map((delay) => Math.max(0, delay + randomBetween(-16, 16)));
+}
+
 function createWashSections(width: number, height: number) {
-  const count = clamp(Math.round(width / 180), 6, 8);
+  const count = clamp(Math.round(width / 155), 8, 10);
   const slotWidth = width / count;
   const overlap = slotWidth * 0.12;
+  const delays = createSectionDelays(count);
 
   return Array.from({ length: count }, (_, index): WashSection => {
-    const curveDepth = clamp(slotWidth * 0.2, 28, 64);
+    const curveDepth = clamp(slotWidth * 0.22, 24, 54);
 
     return {
       curveDepth,
-      delay: Math.max(0, index * 35 + randomBetween(-18, 18)),
-      duration: randomBetween(820, 980),
+      delay: delays[index],
+      duration: randomBetween(860, 1040),
       left: index * slotWidth - overlap * 0.5,
       right: (index + 1) * slotWidth + overlap * 0.5,
-      targetY: height + curveDepth + 28,
+      targetY: height + curveDepth + randomBetween(22, 34),
     };
   });
 }
