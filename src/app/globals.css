@@ -21,16 +21,18 @@
 html {
   height: 100%;
   background:
-    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.2), transparent 24%),
-    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.18), transparent 22%),
+    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.24), transparent 24%),
+    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.2), transparent 22%),
+    radial-gradient(circle at 54% 100%, rgba(56, 71, 42, 0.18), transparent 30%),
     linear-gradient(145deg, #040504 0%, #070805 52%, #090904 100%);
 }
 
 body {
   height: 100%;
   background:
-    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.2), transparent 24%),
-    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.18), transparent 22%),
+    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.24), transparent 24%),
+    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.2), transparent 22%),
+    radial-gradient(circle at 54% 100%, rgba(56, 71, 42, 0.18), transparent 30%),
     linear-gradient(145deg, #040504 0%, #070805 52%, #090904 100%);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
@@ -120,7 +122,7 @@ a {
   max-height: 740px;
   max-width: 740px;
   background:
-    radial-gradient(circle at center, rgba(115, 143, 83, 0.22), rgba(115, 143, 83, 0.08) 42%, transparent 72%);
+    radial-gradient(circle at center, rgba(115, 143, 83, 0.18), rgba(115, 143, 83, 0.06) 42%, transparent 72%);
 }
 
 .hero-orb--right {
@@ -133,7 +135,7 @@ a {
   max-height: 540px;
   max-width: 540px;
   background:
-    radial-gradient(circle at center, rgba(126, 154, 93, 0.16), rgba(126, 154, 93, 0.07) 46%, transparent 74%);
+    radial-gradient(circle at center, rgba(126, 154, 93, 0.14), rgba(126, 154, 93, 0.05) 46%, transparent 74%);
 }
 
 .hero-orb--floor {
@@ -144,29 +146,123 @@ a {
   min-height: 220px;
   max-height: 420px;
   background:
-    radial-gradient(circle at center, rgba(60, 76, 46, 0.26), rgba(60, 76, 46, 0.08) 48%, transparent 76%);
+    radial-gradient(circle at center, rgba(60, 76, 46, 0.24), rgba(60, 76, 46, 0.08) 48%, transparent 76%);
 }
 
-.roof-scene {
+.hero-backdrop {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.roof-scene__svg {
-  height: 100%;
-  width: 100%;
-  overflow: visible;
-  opacity: 0.94;
-  transform: translate3d(-2%, 0, 0) scale(1.04);
+.hero-backdrop__roof {
+  position: absolute;
+  left: -10%;
+  bottom: 9%;
+  width: 78%;
+  height: 45%;
+  clip-path: polygon(10% 52%, 46% 14%, 92% 40%, 60% 88%, 18% 82%);
+  background:
+    linear-gradient(160deg, rgba(18, 24, 17, 0.98) 0%, rgba(10, 12, 10, 0.98) 56%, rgba(6, 6, 6, 0.94) 100%);
+  border: 1px solid rgba(202, 222, 178, 0.12);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  opacity: 0.86;
+  transform: rotate(-8deg);
+}
+
+.hero-backdrop__grid {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      -26deg,
+      rgba(225, 232, 214, 0.09) 0,
+      rgba(225, 232, 214, 0.09) 2px,
+      transparent 2px,
+      transparent 84px
+    ),
+    repeating-linear-gradient(
+      153deg,
+      rgba(225, 232, 214, 0.05) 0,
+      rgba(225, 232, 214, 0.05) 2px,
+      transparent 2px,
+      transparent 64px
+    );
+  opacity: 0.55;
+}
+
+.hero-backdrop__moss {
+  position: absolute;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at center, rgba(124, 157, 86, 0.42), rgba(124, 157, 86, 0.2) 42%, transparent 74%);
+  filter: blur(14px);
+  opacity: 0.9;
+}
+
+.hero-backdrop__moss--one {
+  left: 10%;
+  top: 34%;
+  height: 34%;
+  width: 34%;
+}
+
+.hero-backdrop__moss--two {
+  left: 40%;
+  top: 18%;
+  height: 38%;
+  width: 30%;
+}
+
+.hero-backdrop__moss--three {
+  right: 10%;
+  bottom: 16%;
+  height: 28%;
+  width: 28%;
+}
+
+.hero-backdrop__wash {
+  position: absolute;
+  top: -18%;
+  left: -24%;
+  height: 150%;
+  width: 28%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(226, 244, 255, 0.05) 24%,
+      rgba(183, 212, 144, 0.18) 50%,
+      rgba(226, 244, 255, 0.08) 74%,
+      transparent 100%
+    );
+  filter: blur(18px);
+  opacity: 0.7;
+  transform: rotate(16deg);
+  animation: roof-wash-sweep 14s ease-in-out infinite;
+}
+
+.hero-backdrop__shadow {
+  position: absolute;
+  left: 16%;
+  bottom: 2%;
+  height: 16%;
+  width: 54%;
+  border-radius: 9999px;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5), transparent 72%);
+  filter: blur(18px);
+  opacity: 0.72;
 }
 
 .form-aura {
   background:
-    radial-gradient(circle at 70% 26%, rgba(149, 182, 118, 0.22), transparent 22%),
-    radial-gradient(circle at 42% 74%, rgba(83, 102, 61, 0.28), transparent 34%);
-  filter: blur(48px);
-  opacity: 0.7;
+    radial-gradient(circle at 70% 26%, rgba(149, 182, 118, 0.24), transparent 24%),
+    radial-gradient(circle at 42% 74%, rgba(83, 102, 61, 0.32), transparent 36%);
+  filter: blur(58px);
+  opacity: 0.82;
 }
 
 input,
@@ -194,6 +290,10 @@ input:-webkit-autofill:focus {
     transform: none;
     transition: none;
   }
+
+  .hero-backdrop__wash {
+    animation: none;
+  }
 }
 
 @media (max-width: 1023px) {
@@ -217,8 +317,32 @@ input:-webkit-autofill:focus {
     width: 88vw;
   }
 
-  .roof-scene__svg {
-    opacity: 0.7;
-    transform: translate3d(-8%, 10%, 0) scale(1.16);
+  .hero-backdrop__roof {
+    left: -18%;
+    bottom: 16%;
+    width: 110%;
+    height: 36%;
+  }
+
+  .hero-backdrop__shadow {
+    left: 10%;
+    width: 72%;
+  }
+}
+
+@keyframes roof-wash-sweep {
+  0%,
+  14% {
+    transform: translateX(0) rotate(16deg);
+    opacity: 0;
+  }
+  24%,
+  66% {
+    opacity: 0.72;
+  }
+  82%,
+  100% {
+    transform: translateX(420%) rotate(16deg);
+    opacity: 0;
   }
 }

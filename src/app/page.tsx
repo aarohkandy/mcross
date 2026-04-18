@@ -1,6 +1,6 @@
 import { IntroSplash } from "@/components/intro-splash";
 import { ContactForm } from "@/components/contact-form";
-import { RoofScene } from "@/components/roof-scene";
+import { HeroBackdrop } from "@/components/hero-backdrop";
 
 const business = {
   phoneDisplay: "425-623-0392",
@@ -31,12 +31,12 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-6 py-6 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,29rem)] lg:gap-10">
-            <div className="relative flex min-h-[50svh] items-center overflow-hidden rounded-[2.6rem] lg:min-h-[calc(100svh-10.75rem)]">
-              <RoofScene />
+          <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-8 py-6 lg:grid-cols-[minmax(0,1fr)_minmax(31rem,38rem)] lg:gap-12">
+            <div className="relative flex min-h-[52svh] items-end overflow-hidden rounded-[2.6rem] lg:min-h-[calc(100svh-10.75rem)]">
+              <HeroBackdrop />
 
-              <div className="relative z-10 max-w-[70rem] py-8 pr-[5vw] sm:py-14 lg:pl-2">
-                <h1 className="font-heading text-[clamp(4.15rem,7.2vw,10rem)] leading-[0.88] tracking-[0.035em] text-white [text-shadow:0_0_22px_rgba(164,194,126,0.06)]">
+              <div className="relative z-10 max-w-[66rem] py-8 pr-[4vw] sm:py-14 lg:pl-2">
+                <h1 className="font-heading text-[clamp(4.2rem,6.8vw,9.4rem)] leading-[0.88] tracking-[0.035em] text-white [text-shadow:0_0_22px_rgba(164,194,126,0.06)]">
                   <span className="block whitespace-nowrap">Roof Cleaning</span>
                   <span className="block whitespace-nowrap">That Looks Sharp</span>
                   <span className="block whitespace-nowrap">And Stays Simple.</span>
@@ -44,9 +44,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative flex items-center justify-end lg:pl-4">
+            <div className="relative flex items-center justify-end lg:pl-2">
               <div aria-hidden="true" className="form-aura pointer-events-none absolute inset-[-12%]" />
-              <div className="relative z-10 w-full max-w-[29rem]">
+              <div className="relative z-10 w-full max-w-[38rem]">
                 <ContactForm
                   email={business.email}
                   phoneDisplay={business.phoneDisplay}
