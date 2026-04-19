@@ -157,6 +157,28 @@ a {
   overflow: hidden;
 }
 
+.hero-backdrop__life {
+  position: absolute;
+  inset: -12% -8% -10% -8%;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  -webkit-mask-image:
+    radial-gradient(circle at 22% 72%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 22%, rgba(0, 0, 0, 0.64) 56%, transparent 88%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.62) 70%, transparent 100%);
+  mask-image:
+    radial-gradient(circle at 22% 72%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 22%, rgba(0, 0, 0, 0.64) 56%, transparent 88%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.62) 70%, transparent 100%);
+}
+
+.hero-life-canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+  filter: blur(58px) saturate(114%);
+  opacity: 0.78;
+  transform: scale(1.08);
+}
+
 .hero-backdrop__far-roof {
   position: absolute;
   left: -2%;
@@ -190,7 +212,7 @@ a {
   left: 10%;
   top: 52%;
   width: 44%;
-  animation: trace-glide 16s ease-in-out infinite;
+  animation: trace-glide 22s ease-in-out infinite;
 }
 
 .hero-backdrop__trace--two {
@@ -198,7 +220,7 @@ a {
   left: 18%;
   top: 61%;
   width: 36%;
-  animation: trace-glide 19s ease-in-out infinite reverse;
+  animation: trace-glide 26s ease-in-out infinite reverse;
 }
 
 .hero-backdrop__trace--three {
@@ -206,7 +228,7 @@ a {
   left: 26%;
   top: 68%;
   width: 30%;
-  animation: trace-glide 17s ease-in-out infinite;
+  animation: trace-glide 24s ease-in-out infinite;
 }
 
 .hero-backdrop__roof {
@@ -318,9 +340,9 @@ a {
       transparent 100%
     );
   filter: blur(18px);
-  opacity: 0.7;
+  opacity: 0.48;
   transform: rotate(16deg);
-  animation: roof-wash-sweep 14s ease-in-out infinite;
+  animation: roof-wash-sweep 22s ease-in-out infinite;
 }
 
 .hero-backdrop__shadow {
@@ -374,6 +396,10 @@ input:-webkit-autofill:focus {
     animation: none;
   }
 
+  .hero-life-canvas {
+    transform: none;
+  }
+
   .hero-backdrop__pulse,
   .hero-backdrop__trace,
   .hero-orb,
@@ -419,6 +445,11 @@ input:-webkit-autofill:focus {
   .hero-backdrop__shadow {
     left: 10%;
     width: 72%;
+  }
+
+  .hero-backdrop__life {
+    inset: -10% -16% -8% -16%;
+    opacity: 0.18;
   }
 }
 

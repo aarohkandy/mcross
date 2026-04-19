@@ -1,6 +1,11 @@
+import { HeroLife } from "@/components/hero-life";
+
 export function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="hero-backdrop">
+      <div className="hero-backdrop__life">
+        <HeroLife />
+      </div>
       <div className="hero-backdrop__far-roof" />
       <div className="hero-backdrop__traces">
         <span className="hero-backdrop__trace hero-backdrop__trace--one" />
