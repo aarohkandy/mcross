@@ -33,9 +33,9 @@ export default function Home() {
             <div className="relative flex min-h-[52svh] items-end lg:min-h-[calc(100svh-10.75rem)]">
               <div className="relative z-10 max-w-[66rem] py-8 pr-[4vw] sm:py-14 lg:pl-2">
                 <h1 className="font-heading text-[clamp(4.2rem,6.8vw,9.4rem)] leading-[0.88] tracking-[0.035em] text-white [text-shadow:0_0_22px_rgba(164,194,126,0.06)]">
-                  <span className="block whitespace-nowrap">Roof Cleaning</span>
-                  <span className="block whitespace-nowrap">That Looks Sharp</span>
-                  <span className="block whitespace-nowrap">And Stays Simple.</span>
+                  <span className="block whitespace-nowrap">Roof Cleaning,</span>
+                  <span className="block whitespace-nowrap">Faster, Cheaper,</span>
+                  <span className="block whitespace-nowrap">Better.</span>
                 </h1>
               </div>
             </div>
