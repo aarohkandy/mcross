@@ -105,257 +105,68 @@ a {
   overflow: hidden;
 }
 
-.hero-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(72px);
-  opacity: 0.8;
-  animation: ambient-drift 18s ease-in-out infinite alternate;
-}
-
-.hero-orb--left {
-  left: -14vw;
-  top: 7vh;
-  height: 42vw;
-  width: 42vw;
-  min-height: 320px;
-  min-width: 320px;
-  max-height: 740px;
-  max-width: 740px;
-  background:
-    radial-gradient(circle at center, rgba(115, 143, 83, 0.18), rgba(115, 143, 83, 0.06) 42%, transparent 72%);
-}
-
-.hero-orb--right {
-  right: -8vw;
-  top: 24vh;
-  height: 28vw;
-  width: 28vw;
-  min-height: 260px;
-  min-width: 260px;
-  max-height: 540px;
-  max-width: 540px;
-  background:
-    radial-gradient(circle at center, rgba(126, 154, 93, 0.14), rgba(126, 154, 93, 0.05) 46%, transparent 74%);
-}
-
-.hero-orb--floor {
-  left: 28vw;
-  bottom: -18vh;
-  height: 26vw;
-  width: 52vw;
-  min-height: 220px;
-  max-height: 420px;
-  background:
-    radial-gradient(circle at center, rgba(60, 76, 46, 0.24), rgba(60, 76, 46, 0.08) 48%, transparent 76%);
-}
-
 .hero-backdrop {
   position: absolute;
-  inset: 0;
+  inset: -6% -4%;
   pointer-events: none;
   overflow: hidden;
 }
 
-.hero-backdrop__life {
+.hero-backdrop__field {
   position: absolute;
-  inset: -8% -2% -6% -10%;
-  opacity: 0.42;
-  mix-blend-mode: screen;
-  -webkit-mask-image:
-    radial-gradient(circle at 24% 70%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.98) 28%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.46) 74%, transparent 96%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 56%, rgba(0, 0, 0, 0.34) 82%, transparent 100%);
-  mask-image:
-    radial-gradient(circle at 24% 70%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.98) 28%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.46) 74%, transparent 96%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 56%, rgba(0, 0, 0, 0.34) 82%, transparent 100%);
+  inset: 0;
+  will-change: transform, opacity;
 }
 
-.hero-life-canvas {
-  display: block;
-  height: 100%;
-  width: 100%;
-  filter: blur(40px) saturate(132%) brightness(1.22);
+.hero-backdrop__field--base {
+  background:
+    radial-gradient(circle at 8% 18%, rgba(106, 130, 84, 0.18), transparent 20%),
+    radial-gradient(circle at 24% 66%, rgba(126, 156, 94, 0.16), transparent 22%),
+    radial-gradient(circle at 49% 54%, rgba(81, 105, 61, 0.14), transparent 24%),
+    radial-gradient(circle at 78% 28%, rgba(97, 123, 74, 0.14), transparent 20%),
+    radial-gradient(circle at 92% 76%, rgba(63, 84, 50, 0.16), transparent 18%),
+    linear-gradient(132deg, rgba(7, 9, 7, 0.86) 0%, rgba(6, 8, 6, 0.3) 46%, rgba(7, 8, 7, 0.8) 100%);
   opacity: 0.96;
-  transform: translate3d(-1.5%, 0, 0) scale(1.18);
-  animation: life-drift 34s ease-in-out infinite alternate;
+  animation: backdrop-drift 38s ease-in-out infinite alternate;
 }
 
-.hero-backdrop__far-roof {
-  position: absolute;
-  left: -2%;
-  bottom: 18%;
-  width: 84%;
-  height: 34%;
-  clip-path: polygon(12% 58%, 42% 26%, 88% 42%, 58% 90%, 16% 84%);
+.hero-backdrop__field--glow {
+  inset: -14%;
   background:
-    linear-gradient(160deg, rgba(17, 22, 16, 0.26) 0%, rgba(11, 13, 11, 0.18) 100%);
-  border: 1px solid rgba(202, 222, 178, 0.06);
-  opacity: 0.7;
-  transform: rotate(-8deg);
-}
-
-.hero-backdrop__traces {
-  position: absolute;
-  inset: 0;
-  opacity: 0.34;
-}
-
-.hero-backdrop__trace {
-  position: absolute;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 222, 173, 0.24), transparent);
-  transform-origin: left center;
-  transform: rotate(var(--trace-rotation));
-}
-
-.hero-backdrop__trace--one {
-  --trace-rotation: -25deg;
-  left: 10%;
-  top: 52%;
-  width: 44%;
-  animation: trace-glide 22s ease-in-out infinite;
-}
-
-.hero-backdrop__trace--two {
-  --trace-rotation: -24deg;
-  left: 18%;
-  top: 61%;
-  width: 36%;
-  animation: trace-glide 26s ease-in-out infinite reverse;
-}
-
-.hero-backdrop__trace--three {
-  --trace-rotation: -23deg;
-  left: 26%;
-  top: 68%;
-  width: 30%;
-  animation: trace-glide 24s ease-in-out infinite;
-}
-
-.hero-backdrop__roof {
-  position: absolute;
-  left: -10%;
-  bottom: 9%;
-  width: 78%;
-  height: 45%;
-  clip-path: polygon(10% 52%, 46% 14%, 92% 40%, 60% 88%, 18% 82%);
-  background:
-    linear-gradient(160deg, rgba(18, 24, 17, 0.98) 0%, rgba(10, 12, 10, 0.98) 56%, rgba(6, 6, 6, 0.94) 100%);
-  border: 1px solid rgba(202, 222, 178, 0.12);
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-  opacity: 0.86;
-  transform: rotate(-8deg);
-}
-
-.hero-backdrop__grid {
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      -26deg,
-      rgba(225, 232, 214, 0.09) 0,
-      rgba(225, 232, 214, 0.09) 2px,
-      transparent 2px,
-      transparent 84px
-    ),
-    repeating-linear-gradient(
-      153deg,
-      rgba(225, 232, 214, 0.05) 0,
-      rgba(225, 232, 214, 0.05) 2px,
-      transparent 2px,
-      transparent 64px
-    );
-  opacity: 0.55;
-}
-
-.hero-backdrop__moss {
-  position: absolute;
-  border-radius: 9999px;
-  background:
-    radial-gradient(circle at center, rgba(124, 157, 86, 0.42), rgba(124, 157, 86, 0.2) 42%, transparent 74%);
-  filter: blur(14px);
-  opacity: 0.9;
-}
-
-.hero-backdrop__moss--one {
-  left: 10%;
-  top: 34%;
-  height: 34%;
-  width: 34%;
-}
-
-.hero-backdrop__moss--two {
-  left: 40%;
-  top: 18%;
-  height: 38%;
-  width: 30%;
-}
-
-.hero-backdrop__moss--three {
-  right: 10%;
-  bottom: 16%;
-  height: 28%;
-  width: 28%;
-}
-
-.hero-backdrop__pulse {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(32px);
-  opacity: 0.22;
-  animation: ambient-pulse 11s ease-in-out infinite;
-}
-
-.hero-backdrop__pulse--one {
-  left: 18%;
-  top: 38%;
-  height: 20%;
-  width: 18%;
-  background: radial-gradient(circle at center, rgba(124, 157, 86, 0.46), transparent 70%);
-}
-
-.hero-backdrop__pulse--two {
-  left: 44%;
-  top: 56%;
-  height: 14%;
-  width: 16%;
-  background: radial-gradient(circle at center, rgba(92, 119, 65, 0.42), transparent 72%);
-  animation-delay: -4.5s;
-}
-
-.hero-backdrop__wash {
-  position: absolute;
-  top: -18%;
-  left: -24%;
-  height: 150%;
-  width: 28%;
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(226, 244, 255, 0.05) 24%,
-      rgba(183, 212, 144, 0.18) 50%,
-      rgba(226, 244, 255, 0.08) 74%,
-      transparent 100%
-    );
-  filter: blur(18px);
-  opacity: 0.48;
-  transform: rotate(16deg);
-  animation: roof-wash-sweep 22s ease-in-out infinite;
-}
-
-.hero-backdrop__shadow {
-  position: absolute;
-  left: 16%;
-  bottom: 2%;
-  height: 16%;
-  width: 54%;
-  border-radius: 9999px;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5), transparent 72%);
-  filter: blur(18px);
+    radial-gradient(circle at 18% 62%, rgba(144, 175, 103, 0.18), transparent 16%),
+    radial-gradient(circle at 54% 52%, rgba(97, 129, 69, 0.18), transparent 18%),
+    radial-gradient(circle at 86% 62%, rgba(86, 114, 66, 0.18), transparent 15%);
+  filter: blur(88px);
   opacity: 0.72;
+  mix-blend-mode: screen;
+  animation: backdrop-drift-reverse 44s ease-in-out infinite alternate;
+}
+
+.hero-backdrop__mesh {
+  position: absolute;
+  inset: -8%;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(177, 206, 142, 0.055) 32%, transparent 58%),
+    linear-gradient(24deg, transparent 10%, rgba(95, 122, 73, 0.05) 44%, transparent 74%);
+  opacity: 0.44;
+  filter: blur(28px);
+  animation: mesh-sway 30s ease-in-out infinite alternate;
+}
+
+.hero-backdrop__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.74' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: soft-light;
+}
+
+.hero-backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 34%, rgba(3, 4, 3, 0.14) 74%, rgba(1, 1, 1, 0.38) 100%);
 }
 
 .form-aura {
@@ -393,65 +204,29 @@ input:-webkit-autofill:focus {
     transition: none;
   }
 
-  .hero-backdrop__wash {
-    animation: none;
-  }
-
-  .hero-life-canvas {
-    transform: none;
-    animation: none;
-  }
-
-  .hero-backdrop__pulse,
-  .hero-backdrop__trace,
-  .hero-orb,
+  .hero-backdrop__field,
+  .hero-backdrop__mesh,
   .form-aura {
     animation: none;
   }
 }
 
 @media (max-width: 1023px) {
-  .hero-orb--left {
-    left: -24vw;
-    top: 10vh;
-    height: 62vw;
-    width: 62vw;
+  .hero-backdrop {
+    inset: -10% -12%;
   }
 
-  .hero-orb--right {
-    right: -24vw;
-    top: 46vh;
-    height: 52vw;
-    width: 52vw;
+  .hero-backdrop__field--base {
+    background:
+      radial-gradient(circle at 12% 16%, rgba(106, 130, 84, 0.16), transparent 18%),
+      radial-gradient(circle at 32% 70%, rgba(126, 156, 94, 0.14), transparent 22%),
+      radial-gradient(circle at 84% 24%, rgba(97, 123, 74, 0.12), transparent 20%),
+      radial-gradient(circle at 88% 78%, rgba(63, 84, 50, 0.12), transparent 18%),
+      linear-gradient(132deg, rgba(7, 9, 7, 0.88) 0%, rgba(6, 8, 6, 0.34) 46%, rgba(7, 8, 7, 0.82) 100%);
   }
 
-  .hero-orb--floor {
-    left: 4vw;
-    bottom: -12vh;
-    width: 88vw;
-  }
-
-  .hero-backdrop__roof {
-    left: -18%;
-    bottom: 16%;
-    width: 110%;
-    height: 36%;
-  }
-
-  .hero-backdrop__far-roof {
-    left: -12%;
-    bottom: 22%;
-    width: 108%;
-  }
-
-  .hero-backdrop__shadow {
-    left: 10%;
-    width: 72%;
-  }
-
-  .hero-backdrop__life {
-    inset: -8% -14% -8% -18%;
-    opacity: 0.3;
+  .hero-backdrop__field--glow {
+    opacity: 0.56;
   }
 }
 
@@ -461,18 +236,6 @@ input:-webkit-autofill:focus {
   }
   100% {
     transform: translate3d(2%, -2%, 0) scale(1.04);
-  }
-}
-
-@keyframes ambient-pulse {
-  0%,
-  100% {
-    opacity: 0.14;
-    transform: scale(0.95);
-  }
-  50% {
-    opacity: 0.28;
-    transform: scale(1.06);
   }
 }
 
@@ -488,40 +251,29 @@ input:-webkit-autofill:focus {
   }
 }
 
-@keyframes life-drift {
+@keyframes backdrop-drift {
   0% {
-    transform: translate3d(-2.5%, -1.5%, 0) scale(1.16);
+    transform: translate3d(-2%, -1.5%, 0) scale(1.02);
   }
   100% {
-    transform: translate3d(2.5%, 1.5%, 0) scale(1.22);
+    transform: translate3d(2%, 1.5%, 0) scale(1.06);
   }
 }
 
-@keyframes trace-glide {
-  0%,
-  100% {
-    opacity: 0.14;
-    transform: translateX(0) rotate(var(--trace-rotation));
+@keyframes backdrop-drift-reverse {
+  0% {
+    transform: translate3d(3%, -2%, 0) scale(1.08);
   }
-  50% {
-    opacity: 0.32;
-    transform: translateX(6%) rotate(var(--trace-rotation));
+  100% {
+    transform: translate3d(-2%, 2%, 0) scale(1.12);
   }
 }
 
-@keyframes roof-wash-sweep {
-  0%,
-  14% {
-    transform: translateX(0) rotate(16deg);
-    opacity: 0;
+@keyframes mesh-sway {
+  0% {
+    transform: translate3d(-1%, 0, 0) scale(1.04);
   }
-  24%,
-  66% {
-    opacity: 0.72;
-  }
-  82%,
   100% {
-    transform: translateX(420%) rotate(16deg);
-    opacity: 0;
+    transform: translate3d(1%, 1%, 0) scale(1.08);
   }
 }

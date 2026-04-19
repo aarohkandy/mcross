@@ -15,9 +15,7 @@ export default function Home() {
       <main className="site-shell relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
         <section className="relative min-h-screen overflow-hidden px-[clamp(1.2rem,3vw,3.25rem)] py-5 sm:py-7">
           <div aria-hidden="true" className="hero-atmosphere pointer-events-none absolute inset-0">
-            <div className="hero-orb hero-orb--left" />
-            <div className="hero-orb hero-orb--right" />
-            <div className="hero-orb hero-orb--floor" />
+            <HeroBackdrop />
           </div>
 
           <header className="relative z-10 flex items-start justify-between gap-6">
@@ -32,9 +30,7 @@ export default function Home() {
           </header>
 
           <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-8 py-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(36rem,44rem)] lg:gap-14">
-            <div className="relative flex min-h-[52svh] items-end overflow-hidden rounded-[2.6rem] lg:min-h-[calc(100svh-10.75rem)]">
-              <HeroBackdrop />
-
+            <div className="relative flex min-h-[52svh] items-end lg:min-h-[calc(100svh-10.75rem)]">
               <div className="relative z-10 max-w-[66rem] py-8 pr-[4vw] sm:py-14 lg:pl-2">
                 <h1 className="font-heading text-[clamp(4.2rem,6.8vw,9.4rem)] leading-[0.88] tracking-[0.035em] text-white [text-shadow:0_0_22px_rgba(164,194,126,0.06)]">
                   <span className="block whitespace-nowrap">Roof Cleaning</span>
