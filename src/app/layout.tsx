@@ -29,7 +29,9 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body suppressHydrationWarning className="min-h-full flex flex-col">
+        {children}
+      </body>
     </html>
   );
 }
