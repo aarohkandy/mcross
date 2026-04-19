@@ -159,24 +159,25 @@ a {
 
 .hero-backdrop__life {
   position: absolute;
-  inset: -12% -8% -10% -8%;
-  opacity: 0.22;
+  inset: -8% -2% -6% -10%;
+  opacity: 0.42;
   mix-blend-mode: screen;
   -webkit-mask-image:
-    radial-gradient(circle at 22% 72%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 22%, rgba(0, 0, 0, 0.64) 56%, transparent 88%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.62) 70%, transparent 100%);
+    radial-gradient(circle at 24% 70%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.98) 28%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.46) 74%, transparent 96%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 56%, rgba(0, 0, 0, 0.34) 82%, transparent 100%);
   mask-image:
-    radial-gradient(circle at 22% 72%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 22%, rgba(0, 0, 0, 0.64) 56%, transparent 88%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.62) 70%, transparent 100%);
+    radial-gradient(circle at 24% 70%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.98) 28%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.46) 74%, transparent 96%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 56%, rgba(0, 0, 0, 0.34) 82%, transparent 100%);
 }
 
 .hero-life-canvas {
   display: block;
   height: 100%;
   width: 100%;
-  filter: blur(58px) saturate(114%);
-  opacity: 0.78;
-  transform: scale(1.08);
+  filter: blur(40px) saturate(132%) brightness(1.22);
+  opacity: 0.96;
+  transform: translate3d(-1.5%, 0, 0) scale(1.18);
+  animation: life-drift 34s ease-in-out infinite alternate;
 }
 
 .hero-backdrop__far-roof {
@@ -398,6 +399,7 @@ input:-webkit-autofill:focus {
 
   .hero-life-canvas {
     transform: none;
+    animation: none;
   }
 
   .hero-backdrop__pulse,
@@ -448,8 +450,8 @@ input:-webkit-autofill:focus {
   }
 
   .hero-backdrop__life {
-    inset: -10% -16% -8% -16%;
-    opacity: 0.18;
+    inset: -8% -14% -8% -18%;
+    opacity: 0.3;
   }
 }
 
@@ -483,6 +485,15 @@ input:-webkit-autofill:focus {
   50% {
     opacity: 0.9;
     transform: scale(1.03);
+  }
+}
+
+@keyframes life-drift {
+  0% {
+    transform: translate3d(-2.5%, -1.5%, 0) scale(1.16);
+  }
+  100% {
+    transform: translate3d(2.5%, 1.5%, 0) scale(1.22);
   }
 }
 

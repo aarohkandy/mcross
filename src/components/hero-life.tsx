@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-const CELL_SCALE = 30;
-const STEP_MS = 320;
-const MIN_COLS = 52;
-const MIN_ROWS = 28;
-const SEED_DENSITY = 0.18;
+const CELL_SCALE = 26;
+const STEP_MS = 260;
+const MIN_COLS = 64;
+const MIN_ROWS = 36;
+const SEED_DENSITY = 0.22;
 
 function randomGrid(size: number, density: number) {
   const grid = new Uint8Array(size);
@@ -80,7 +80,7 @@ export function HeroLife() {
 
     function draw() {
       ctx.clearRect(0, 0, cols, rows);
-      ctx.fillStyle = "rgba(150, 180, 120, 0.96)";
+      ctx.fillStyle = "rgba(163, 196, 124, 0.98)";
 
       for (let index = 0; index < grid.length; index += 1) {
         if (grid[index] === 0) {
@@ -89,7 +89,7 @@ export function HeroLife() {
 
         const x = index % cols;
         const y = Math.floor(index / cols);
-        ctx.fillRect(x, y, 1, 1);
+        ctx.fillRect(x - 0.18, y - 0.18, 1.36, 1.36);
       }
     }
 
