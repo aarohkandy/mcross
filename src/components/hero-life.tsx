@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-const GRID_WIDTH = 84;
-const GRID_HEIGHT = 48;
+const GRID_WIDTH = 96;
+const GRID_HEIGHT = 54;
 const TICK_MS = 180;
 const PATCH_SIZE = 10;
 const PATCH_RATE = 0.16;
@@ -142,22 +142,22 @@ export function HeroLife() {
           const east = col === GRID_WIDTH - 1 ? 0 : col + 1;
           const index = row * GRID_WIDTH + col;
 
-          display[index] += (current[index] - display[index]) * 0.38;
+          display[index] += (current[index] - display[index]) * 0.42;
 
           const field =
-            display[index] * 0.42 +
+            display[index] * 0.52 +
             (display[north * GRID_WIDTH + col] +
               display[south * GRID_WIDTH + col] +
               display[row * GRID_WIDTH + west] +
               display[row * GRID_WIDTH + east]) *
-              0.1 +
+              0.075 +
             (display[north * GRID_WIDTH + west] +
               display[north * GRID_WIDTH + east] +
               display[south * GRID_WIDTH + west] +
               display[south * GRID_WIDTH + east]) *
-              0.045;
+              0.025;
 
-          if (field < 0.04) {
+          if (field < 0.042) {
             continue;
           }
 
