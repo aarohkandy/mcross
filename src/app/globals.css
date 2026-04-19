@@ -107,7 +107,7 @@ a {
 
 .hero-backdrop {
   position: absolute;
-  inset: -6% -4%;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
@@ -115,42 +115,52 @@ a {
 .hero-backdrop__field {
   position: absolute;
   inset: 0;
-  will-change: transform, opacity;
 }
 
 .hero-backdrop__field--base {
   background:
-    radial-gradient(circle at 8% 18%, rgba(106, 130, 84, 0.18), transparent 20%),
-    radial-gradient(circle at 24% 66%, rgba(126, 156, 94, 0.16), transparent 22%),
-    radial-gradient(circle at 49% 54%, rgba(81, 105, 61, 0.14), transparent 24%),
-    radial-gradient(circle at 78% 28%, rgba(97, 123, 74, 0.14), transparent 20%),
-    radial-gradient(circle at 92% 76%, rgba(63, 84, 50, 0.16), transparent 18%),
-    linear-gradient(132deg, rgba(7, 9, 7, 0.86) 0%, rgba(6, 8, 6, 0.3) 46%, rgba(7, 8, 7, 0.8) 100%);
-  opacity: 0.96;
-  animation: backdrop-drift 38s ease-in-out infinite alternate;
+    radial-gradient(circle at 10% 18%, rgba(97, 122, 75, 0.12), transparent 18%),
+    radial-gradient(circle at 30% 72%, rgba(79, 102, 61, 0.1), transparent 22%),
+    radial-gradient(circle at 76% 24%, rgba(87, 110, 67, 0.1), transparent 18%),
+    radial-gradient(circle at 92% 78%, rgba(65, 84, 50, 0.12), transparent 16%),
+    linear-gradient(135deg, rgba(7, 8, 7, 0.92) 0%, rgba(5, 6, 5, 0.96) 100%);
+  opacity: 1;
 }
 
 .hero-backdrop__field--glow {
-  inset: -14%;
+  inset: 0;
   background:
-    radial-gradient(circle at 18% 62%, rgba(144, 175, 103, 0.18), transparent 16%),
-    radial-gradient(circle at 54% 52%, rgba(97, 129, 69, 0.18), transparent 18%),
-    radial-gradient(circle at 86% 62%, rgba(86, 114, 66, 0.18), transparent 15%);
-  filter: blur(88px);
-  opacity: 0.72;
-  mix-blend-mode: screen;
-  animation: backdrop-drift-reverse 44s ease-in-out infinite alternate;
+    radial-gradient(circle at 18% 62%, rgba(138, 169, 100, 0.08), transparent 14%),
+    radial-gradient(circle at 54% 54%, rgba(101, 129, 72, 0.08), transparent 16%),
+    radial-gradient(circle at 86% 62%, rgba(84, 112, 64, 0.08), transparent 14%);
+  opacity: 0.9;
 }
 
 .hero-backdrop__mesh {
   position: absolute;
-  inset: -8%;
+  inset: 0;
   background:
-    linear-gradient(120deg, transparent 0%, rgba(177, 206, 142, 0.055) 32%, transparent 58%),
-    linear-gradient(24deg, transparent 10%, rgba(95, 122, 73, 0.05) 44%, transparent 74%);
-  opacity: 0.44;
-  filter: blur(28px);
-  animation: mesh-sway 30s ease-in-out infinite alternate;
+    linear-gradient(118deg, transparent 0%, rgba(177, 206, 142, 0.028) 34%, transparent 58%),
+    linear-gradient(28deg, transparent 14%, rgba(95, 122, 73, 0.024) 44%, transparent 72%);
+  opacity: 0.28;
+}
+
+.hero-backdrop__life {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  -webkit-mask-image:
+    radial-gradient(circle at 50% 52%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.78) 44%, rgba(0, 0, 0, 0.34) 74%, transparent 100%);
+  mask-image:
+    radial-gradient(circle at 50% 52%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.78) 44%, rgba(0, 0, 0, 0.34) 74%, transparent 100%);
+}
+
+.hero-life-canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+  image-rendering: auto;
+  opacity: 0.92;
 }
 
 .hero-backdrop__grain {
@@ -173,9 +183,8 @@ a {
   background:
     radial-gradient(circle at 70% 26%, rgba(149, 182, 118, 0.24), transparent 24%),
     radial-gradient(circle at 42% 74%, rgba(83, 102, 61, 0.32), transparent 36%);
-  filter: blur(58px);
-  opacity: 0.82;
-  animation: aura-breathe 14s ease-in-out infinite;
+  filter: blur(34px);
+  opacity: 0.58;
 }
 
 input,
@@ -205,75 +214,26 @@ input:-webkit-autofill:focus {
   }
 
   .hero-backdrop__field,
-  .hero-backdrop__mesh,
   .form-aura {
     animation: none;
   }
 }
 
 @media (max-width: 1023px) {
-  .hero-backdrop {
-    inset: -10% -12%;
-  }
-
   .hero-backdrop__field--base {
     background:
-      radial-gradient(circle at 12% 16%, rgba(106, 130, 84, 0.16), transparent 18%),
-      radial-gradient(circle at 32% 70%, rgba(126, 156, 94, 0.14), transparent 22%),
-      radial-gradient(circle at 84% 24%, rgba(97, 123, 74, 0.12), transparent 20%),
-      radial-gradient(circle at 88% 78%, rgba(63, 84, 50, 0.12), transparent 18%),
-      linear-gradient(132deg, rgba(7, 9, 7, 0.88) 0%, rgba(6, 8, 6, 0.34) 46%, rgba(7, 8, 7, 0.82) 100%);
+      radial-gradient(circle at 12% 16%, rgba(106, 130, 84, 0.12), transparent 18%),
+      radial-gradient(circle at 32% 70%, rgba(126, 156, 94, 0.1), transparent 22%),
+      radial-gradient(circle at 84% 24%, rgba(97, 123, 74, 0.09), transparent 20%),
+      radial-gradient(circle at 88% 78%, rgba(63, 84, 50, 0.11), transparent 18%),
+      linear-gradient(132deg, rgba(7, 9, 7, 0.92) 0%, rgba(6, 8, 6, 0.96) 100%);
   }
 
   .hero-backdrop__field--glow {
-    opacity: 0.56;
+    opacity: 0.78;
   }
-}
 
-@keyframes ambient-drift {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  100% {
-    transform: translate3d(2%, -2%, 0) scale(1.04);
-  }
-}
-
-@keyframes aura-breathe {
-  0%,
-  100% {
-    opacity: 0.72;
-    transform: scale(0.98);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes backdrop-drift {
-  0% {
-    transform: translate3d(-2%, -1.5%, 0) scale(1.02);
-  }
-  100% {
-    transform: translate3d(2%, 1.5%, 0) scale(1.06);
-  }
-}
-
-@keyframes backdrop-drift-reverse {
-  0% {
-    transform: translate3d(3%, -2%, 0) scale(1.08);
-  }
-  100% {
-    transform: translate3d(-2%, 2%, 0) scale(1.12);
-  }
-}
-
-@keyframes mesh-sway {
-  0% {
-    transform: translate3d(-1%, 0, 0) scale(1.04);
-  }
-  100% {
-    transform: translate3d(1%, 1%, 0) scale(1.08);
+  .hero-backdrop__life {
+    opacity: 0.18;
   }
 }
