@@ -29,20 +29,20 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="relative z-10 grid min-h-[calc(100svh-5.6rem)] items-center gap-8 py-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(36rem,44rem)] lg:gap-14">
-            <div className="relative flex min-h-[52svh] items-end lg:min-h-[calc(100svh-10.75rem)]">
-              <div className="relative z-10 max-w-[66rem] py-8 pr-[4vw] sm:py-14 lg:pl-2">
-                <h1 className="font-heading text-[clamp(4.2rem,6.8vw,9.4rem)] leading-[0.88] tracking-[0.035em] text-white [text-shadow:0_0_22px_rgba(164,194,126,0.06)]">
-                  <span className="block whitespace-nowrap">Roof Cleaning</span>
-                  <span className="block whitespace-nowrap">That Looks Sharp</span>
-                  <span className="block whitespace-nowrap">And Stays Simple.</span>
+          <div className="hero-layout relative z-10">
+            <div className="hero-copy">
+              <div className="hero-copy__inner relative z-10">
+                <h1 className="hero-lockup font-heading text-white">
+                  <span className="hero-lockup__line">Roof Cleaning,</span>
+                  <span className="hero-lockup__line">Faster, Cheaper,</span>
+                  <span className="hero-lockup__line">Better.</span>
                 </h1>
               </div>
             </div>
 
-            <div className="relative flex items-center justify-end lg:pl-1">
+            <div className="hero-form-shell relative">
               <div aria-hidden="true" className="form-aura pointer-events-none absolute inset-[-12%]" />
-              <div className="relative z-10 w-full max-w-[44rem]">
+              <div className="relative z-10 w-full">
                 <ContactForm
                   email={business.email}
                   phoneDisplay={business.phoneDisplay}
