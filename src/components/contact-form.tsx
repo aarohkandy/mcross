@@ -12,6 +12,11 @@ type ContactFormProps = {
 
 type SubmissionState = "idle" | "submitting" | "success" | "error";
 
+const statusMessages: Record<Exclude<SubmissionState, "idle" | "submitting">, string> = {
+  error: "Could not send. Please call or email us instead.",
+  success: "Request sent. We’ll review the address and follow up with availability.",
+};
+
 type ContactField = {
   name: "name" | "address" | "phone" | "email";
   placeholder: string;
@@ -59,6 +64,30 @@ function ContactLinkCard({
         </span>
       </div>
     </a>
+  );
+}
+
+function SubmissionStatus({
+  message,
+  state,
+}: {
+  message: string;
+  state: SubmissionState;
+}) {
+  const isVisible = state === "success" || state === "error";
+  const toneClass =
+    state === "success"
+      ? "border-[rgba(150,180,120,0.34)] bg-[rgba(150,180,120,0.09)] text-white"
+      : "border-[rgba(220,120,100,0.34)] bg-[rgba(120,42,30,0.16)] text-white";
+
+  return (
+    <div className="mt-3 min-h-[3.5rem]" aria-live="polite">
+      {isVisible ? (
+        <div className={`rounded-[1.15rem] border px-4 py-3 text-sm leading-relaxed ${toneClass}`}>
+          {message}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -111,10 +140,10 @@ export function ContactForm({
 
       form.reset();
       setState("success");
-      setMessage("Request sent.");
+      setMessage(statusMessages.success);
     } catch {
       setState("error");
-      setMessage("Could not send. Call or email instead.");
+      setMessage(statusMessages.error);
     }
   }
 
@@ -164,9 +193,7 @@ export function ContactForm({
         </button>
       </form>
 
-      <div className="mt-3 min-h-6 text-sm text-white/68" aria-live="polite">
-        {message}
-      </div>
+      <SubmissionStatus message={message} state={state} />
 
       <div className="contact-panel__links mt-4 grid gap-3">
         <ContactLinkCard
