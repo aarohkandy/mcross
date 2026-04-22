@@ -4,13 +4,19 @@ import { useEffect, useRef } from "react";
 
 const GRID_WIDTH = 96;
 const GRID_HEIGHT = 54;
-const TICK_MS = 180;
 const PATCH_SIZE = 10;
 const PATCH_RATE = 0.16;
 const STALE_LIMIT = 26;
 const COLOR_R = 150;
 const COLOR_G = 183;
 const COLOR_B = 112;
+
+const timing = {
+  steadyTickMs: 180,
+  startupTickMs: 82,
+  startupTicks: 12,
+  startupWarmupSteps: 4,
+} as const;
 
 function countNeighbors(grid: Uint8Array, row: number, col: number) {
   const north = row === 0 ? GRID_HEIGHT - 1 : row - 1;
@@ -113,22 +119,22 @@ export function HeroLife() {
       return;
     }
 
-    const element = canvas;
     const ctx = context;
     const imageData = ctx.createImageData(GRID_WIDTH, GRID_HEIGHT);
     const pixels = imageData.data;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const shouldPauseWhenHidden = !navigator.webdriver;
 
-    element.width = GRID_WIDTH;
-    element.height = GRID_HEIGHT;
+    canvas.width = GRID_WIDTH;
+    canvas.height = GRID_HEIGHT;
     ctx.imageSmoothingEnabled = true;
 
     let current: Uint8Array = createSeed();
     let next: Uint8Array = new Uint8Array(current.length);
     const display = new Float32Array(current.length);
     let staleTicks = 0;
-    let intervalId: number | null = null;
+    let tickCount = 0;
+    let timeoutId: number | null = null;
 
     function draw() {
       pixels.fill(0);
@@ -207,25 +213,47 @@ export function HeroLife() {
       const swap: Uint8Array = current;
       current = next;
       next = swap;
-      element.dataset.liveCells = String(liveCells);
       draw();
     }
 
-    function start() {
-      if (intervalId !== null || reducedMotion.matches) {
+    function getTickDelay() {
+      return tickCount < timing.startupTicks
+        ? timing.startupTickMs
+        : timing.steadyTickMs;
+    }
+
+    function runStep() {
+      step();
+      tickCount += 1;
+    }
+
+    function scheduleNextTick() {
+      if (reducedMotion.matches) {
         return;
       }
 
-      intervalId = window.setInterval(step, TICK_MS);
+      timeoutId = window.setTimeout(() => {
+        timeoutId = null;
+        runStep();
+        scheduleNextTick();
+      }, getTickDelay());
+    }
+
+    function start() {
+      if (timeoutId !== null || reducedMotion.matches) {
+        return;
+      }
+
+      scheduleNextTick();
     }
 
     function stop() {
-      if (intervalId === null) {
+      if (timeoutId === null) {
         return;
       }
 
-      window.clearInterval(intervalId);
-      intervalId = null;
+      window.clearTimeout(timeoutId);
+      timeoutId = null;
     }
 
     function handleVisibilityChange() {
@@ -240,8 +268,16 @@ export function HeroLife() {
       }
     }
 
-    element.dataset.liveCells = String(countLiveCells(current));
     draw();
+
+    for (
+      let warmupStep = 0;
+      warmupStep < timing.startupWarmupSteps;
+      warmupStep += 1
+    ) {
+      runStep();
+    }
+
     start();
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
@@ -256,7 +292,6 @@ export function HeroLife() {
       ref={canvasRef}
       aria-hidden="true"
       className="hero-life-canvas"
-      data-live-cells="0"
     />
   );
 }

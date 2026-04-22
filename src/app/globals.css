@@ -4,8 +4,11 @@
   --background: #050505;
   --foreground: #f5f5ef;
   --accent: #96b478;
-  --accent-dim: #657d4f;
-  --panel-edge: rgba(174, 207, 133, 0.12);
+  --page-background:
+    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.24), transparent 24%),
+    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.2), transparent 22%),
+    radial-gradient(circle at 54% 100%, rgba(56, 71, 42, 0.18), transparent 30%),
+    linear-gradient(145deg, #040504 0%, #070805 52%, #090904 100%);
 }
 
 @theme inline {
@@ -20,20 +23,12 @@
 
 html {
   height: 100%;
-  background:
-    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.24), transparent 24%),
-    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.2), transparent 22%),
-    radial-gradient(circle at 54% 100%, rgba(56, 71, 42, 0.18), transparent 30%),
-    linear-gradient(145deg, #040504 0%, #070805 52%, #090904 100%);
+  background: var(--page-background);
 }
 
 body {
   height: 100%;
-  background:
-    radial-gradient(circle at 12% 16%, rgba(103, 128, 76, 0.24), transparent 24%),
-    radial-gradient(circle at 88% 78%, rgba(88, 109, 67, 0.2), transparent 22%),
-    radial-gradient(circle at 54% 100%, rgba(56, 71, 42, 0.18), transparent 30%),
-    linear-gradient(145deg, #040504 0%, #070805 52%, #090904 100%);
+  background: var(--page-background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
   overflow: hidden;
@@ -65,19 +60,6 @@ a {
 
 .font-heading {
   font-family: var(--font-heading), sans-serif;
-}
-
-.soft-float {
-  opacity: 0;
-  transform: translate3d(0, 28px, 0) scale(0.988);
-  transition:
-    opacity 560ms cubic-bezier(0.2, 0.75, 0.18, 1),
-    transform 780ms cubic-bezier(0.2, 0.75, 0.18, 1);
-}
-
-.soft-float--visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .intro-overlay {
@@ -179,6 +161,45 @@ a {
     radial-gradient(circle at center, transparent 34%, rgba(3, 4, 3, 0.14) 74%, rgba(1, 1, 1, 0.38) 100%);
 }
 
+.founders-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 18rem;
+  padding: 0.55rem 0.8rem 0.55rem 0.6rem;
+  border: 1px solid rgba(150, 180, 120, 0.2);
+  border-radius: 999px;
+  background: rgba(5, 7, 5, 0.68);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.24);
+}
+
+.founders-badge__mark {
+  width: clamp(2.05rem, 3vw, 2.55rem);
+  height: clamp(2.05rem, 3vw, 2.55rem);
+  flex: 0 0 auto;
+  border-radius: 0.72rem;
+  box-shadow:
+    0 0 0 1px rgba(22, 255, 0, 0.13),
+    0 0 24px rgba(22, 255, 0, 0.12);
+}
+
+.founders-badge__copy {
+  display: grid;
+  gap: 0.1rem;
+  color: rgba(245, 245, 239, 0.72);
+  font-size: clamp(0.62rem, 0.82vw, 0.76rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+}
+
+.founders-badge__copy strong {
+  color: rgba(245, 245, 239, 0.94);
+  font-size: clamp(0.76rem, 1vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
 .form-aura {
   background:
     radial-gradient(circle at 70% 26%, rgba(149, 182, 118, 0.24), transparent 24%),
@@ -278,13 +299,6 @@ input:-webkit-autofill:focus {
 @media (prefers-reduced-motion: reduce) {
   .intro-overlay {
     display: none;
-  }
-
-  .soft-float,
-  .soft-float--visible {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 
   .form-aura {
@@ -432,10 +446,20 @@ input:-webkit-autofill:focus {
   .hero-backdrop__life {
     opacity: 0.18;
   }
+
+  .founders-badge {
+    align-self: flex-start;
+    gap: 0.55rem;
+    padding: 0.48rem 0.62rem 0.48rem 0.48rem;
+  }
 }
 
 @media (max-width: 639px) {
   .hero-lockup {
     max-width: 8.8ch;
+  }
+
+  .founders-badge__copy span {
+    display: none;
   }
 }

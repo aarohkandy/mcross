@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 type ContactFormProps = {
+  ccEmails?: string[];
   email: string;
   phoneDisplay: string;
   phoneHref: string;
@@ -11,7 +12,58 @@ type ContactFormProps = {
 
 type SubmissionState = "idle" | "submitting" | "success" | "error";
 
+type ContactField = {
+  name: "name" | "address" | "phone" | "email";
+  placeholder: string;
+  type: "email" | "tel" | "text";
+};
+
+const quoteFields: ContactField[] = [
+  { name: "name", placeholder: "Name", type: "text" },
+  { name: "address", placeholder: "Property Address", type: "text" },
+  { name: "phone", placeholder: "Phone", type: "tel" },
+  { name: "email", placeholder: "Email", type: "email" },
+];
+
+type ContactLinkCardProps = {
+  href: string;
+  label: string;
+  value: string;
+  valueClassName?: string;
+  action: string;
+};
+
+function ContactLinkCard({
+  action,
+  href,
+  label,
+  value,
+  valueClassName = "",
+}: ContactLinkCardProps) {
+  return (
+    <a
+      href={href}
+      className="contact-panel__contact-card group rounded-[1.35rem] border border-white/10 bg-[#070707] transition hover:border-[rgba(150,180,120,0.35)]"
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-[0.68rem] uppercase tracking-[0.34em] text-[var(--accent)]/72">
+            {label}
+          </p>
+          <p className={`mt-1 text-base text-white${valueClassName ? ` ${valueClassName}` : ""}`}>
+            {value}
+          </p>
+        </div>
+        <span className="contact-panel__contact-pill rounded-full border border-white/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.28em] text-white/62 transition group-hover:border-[rgba(150,180,120,0.35)] group-hover:text-white">
+          {action}
+        </span>
+      </div>
+    </a>
+  );
+}
+
 export function ContactForm({
+  ccEmails = [],
   email,
   phoneDisplay,
   phoneHref,
@@ -29,6 +81,10 @@ export function ContactForm({
     formData.set("_subject", "New MCROSS quote request");
     formData.set("_url", window.location.href);
     formData.set("_replyto", typeof replyTo === "string" ? replyTo : "");
+
+    if (ccEmails.length > 0) {
+      formData.set("_cc", ccEmails.join(","));
+    }
 
     setState("submitting");
     setMessage("");
@@ -87,34 +143,17 @@ export function ContactForm({
           tabIndex={-1}
           autoComplete="off"
         />
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          required
-          className="contact-panel__field rounded-[1.35rem] border border-white/9 bg-[#070707] px-5 text-base text-white outline-none transition placeholder:text-white/34 focus:border-[var(--accent)]"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Property Address"
-          required
-          className="contact-panel__field rounded-[1.35rem] border border-white/9 bg-[#070707] px-5 text-base text-white outline-none transition placeholder:text-white/34 focus:border-[var(--accent)]"
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone"
-          required
-          className="contact-panel__field rounded-[1.35rem] border border-white/9 bg-[#070707] px-5 text-base text-white outline-none transition placeholder:text-white/34 focus:border-[var(--accent)]"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          className="contact-panel__field rounded-[1.35rem] border border-white/9 bg-[#070707] px-5 text-base text-white outline-none transition placeholder:text-white/34 focus:border-[var(--accent)]"
-        />
+
+        {quoteFields.map((field) => (
+          <input
+            className="contact-panel__field rounded-[1.35rem] border border-white/9 bg-[#070707] px-5 text-base text-white outline-none transition placeholder:text-white/34 focus:border-[var(--accent)]"
+            key={field.name}
+            name={field.name}
+            placeholder={field.placeholder}
+            required
+            type={field.type}
+          />
+        ))}
 
         <button
           type="submit"
@@ -130,40 +169,19 @@ export function ContactForm({
       </div>
 
       <div className="contact-panel__links mt-4 grid gap-3">
-        <a
+        <ContactLinkCard
+          action="Now"
           href={phoneHref}
-          className="contact-panel__contact-card group rounded-[1.35rem] border border-white/10 bg-[#070707] transition hover:border-[rgba(150,180,120,0.35)]"
-        >
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[0.68rem] uppercase tracking-[0.34em] text-[var(--accent)]/72">
-                Call
-              </p>
-              <p className="mt-1 text-base tracking-[0.12em] text-white">
-                {phoneDisplay}
-              </p>
-            </div>
-            <span className="contact-panel__contact-pill rounded-full border border-white/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.28em] text-white/62 transition group-hover:border-[rgba(150,180,120,0.35)] group-hover:text-white">
-              Now
-            </span>
-          </div>
-        </a>
-        <a
+          label="Call"
+          value={phoneDisplay}
+          valueClassName="tracking-[0.12em]"
+        />
+        <ContactLinkCard
+          action="Open"
           href={`mailto:${email}`}
-          className="contact-panel__contact-card group rounded-[1.35rem] border border-white/10 bg-[#070707] transition hover:border-[rgba(150,180,120,0.35)]"
-        >
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[0.68rem] uppercase tracking-[0.34em] text-[var(--accent)]/72">
-                Email
-              </p>
-              <p className="mt-1 text-base text-white">{email}</p>
-            </div>
-            <span className="contact-panel__contact-pill rounded-full border border-white/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.28em] text-white/62 transition group-hover:border-[rgba(150,180,120,0.35)] group-hover:text-white">
-              Open
-            </span>
-          </div>
-        </a>
+          label="Email"
+          value={email}
+        />
       </div>
     </div>
   );

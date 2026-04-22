@@ -11,7 +11,9 @@ type WashSection = {
   targetY: number;
 };
 
-const INTRO_DURATION_MS = 2050;
+const introTiming = {
+  durationMs: 1180,
+} as const;
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -102,7 +104,7 @@ export function IntroSplash() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setVisible(false);
-    }, INTRO_DURATION_MS);
+    }, introTiming.durationMs);
 
     return () => window.clearTimeout(timer);
   }, []);
@@ -230,7 +232,7 @@ export function IntroSplash() {
         context.clearRect(0, 0, width, height);
       }
 
-      if (elapsed < INTRO_DURATION_MS - 180) {
+      if (elapsed < introTiming.durationMs - 180) {
         animationFrame = window.requestAnimationFrame(render);
       }
     };
@@ -253,7 +255,7 @@ export function IntroSplash() {
     <div
       aria-hidden="true"
       className="intro-overlay pointer-events-none fixed inset-0 z-50 overflow-hidden"
-      style={{ animationDuration: `${INTRO_DURATION_MS}ms` }}
+      style={{ animationDuration: `${introTiming.durationMs}ms` }}
     >
       <canvas ref={canvasRef} className="intro-canvas h-full w-full" />
     </div>
