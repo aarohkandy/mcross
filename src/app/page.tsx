@@ -37,24 +37,20 @@ export default function Home() {
                 className="founders-badge__mark"
                 viewBox="0 0 100 100"
               >
-                <rect width="100" height="100" rx="18" fill="#071507" />
                 <path
-                  d="M64 14 24 37c-4 2-4 8 0 11l14 8 46-27c2-1 3-3 3-6V18c0-4-5-6-8-4Z"
-                  fill="#16ff00"
+                  d="M62.7 12.8 22.8 36c-4.4 2.6-4.3 8.9.2 11.4l14 7.7 45.5-26.4c2.2-1.3 3.5-3.6 3.5-6.1V17c0-3.8-4.2-6.2-7.6-4.2H62.7Z"
+                  fill="currentColor"
                 />
                 <path
-                  d="M16 49c-5-3-11 4-7 9l54 31c4 2 9-1 9-6V67L27 42 16 49Z"
-                  fill="#16ff00"
+                  d="M14.8 47.6c-5.2-3-10.6 3-7.3 8.1l55.2 31.8c4.1 2.4 9.3-.6 9.3-5.3V67.4L27.1 42.1l-12.3 5.5Z"
+                  fill="currentColor"
                 />
                 <path
-                  d="M61 44 86 30c4-2 9 1 9 6v28c0 5-5 8-9 6L61 56c-5-3-5-9 0-12Z"
-                  fill="#16ff00"
+                  d="M60.7 43.8 85.4 29.5c4.1-2.4 9.3.6 9.3 5.3v28.4c0 4.7-5.2 7.7-9.3 5.3L60.7 54.2c-4.1-2.3-4.1-8.1 0-10.4Z"
+                  fill="currentColor"
                 />
               </svg>
-              <span className="founders-badge__copy">
-                <span>Backed by</span>
-                <strong>Founders Inc.</strong>
-              </span>
+              <span>Backed by Founders Inc.</span>
             </div>
           </header>
 

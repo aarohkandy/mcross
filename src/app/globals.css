@@ -164,40 +164,23 @@ a {
 .founders-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  max-width: 18rem;
-  padding: 0.55rem 0.8rem 0.55rem 0.6rem;
-  border: 1px solid rgba(150, 180, 120, 0.2);
-  border-radius: 999px;
-  background: rgba(5, 7, 5, 0.68);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.24);
+  gap: 0.42rem;
+  max-width: 15rem;
+  padding-top: 0.42rem;
+  color: rgba(150, 180, 120, 0.78);
+  font-size: clamp(0.7rem, 0.82vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .founders-badge__mark {
-  width: clamp(2.05rem, 3vw, 2.55rem);
-  height: clamp(2.05rem, 3vw, 2.55rem);
+  width: clamp(1.35rem, 1.8vw, 1.7rem);
+  height: clamp(1.35rem, 1.8vw, 1.7rem);
   flex: 0 0 auto;
-  border-radius: 0.72rem;
-  box-shadow:
-    0 0 0 1px rgba(22, 255, 0, 0.13),
-    0 0 24px rgba(22, 255, 0, 0.12);
-}
-
-.founders-badge__copy {
-  display: grid;
-  gap: 0.1rem;
-  color: rgba(245, 245, 239, 0.72);
-  font-size: clamp(0.62rem, 0.82vw, 0.76rem);
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 0.26em;
-}
-
-.founders-badge__copy strong {
-  color: rgba(245, 245, 239, 0.94);
-  font-size: clamp(0.76rem, 1vw, 0.95rem);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  color: #19ff08;
+  filter: drop-shadow(0 0 8px rgba(25, 255, 8, 0.16));
 }
 
 .form-aura {
@@ -449,8 +432,9 @@ input:-webkit-autofill:focus {
 
   .founders-badge {
     align-self: flex-start;
-    gap: 0.55rem;
-    padding: 0.48rem 0.62rem 0.48rem 0.48rem;
+    max-width: 12rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
   }
 }
 
@@ -459,7 +443,8 @@ input:-webkit-autofill:focus {
     max-width: 8.8ch;
   }
 
-  .founders-badge__copy span {
-    display: none;
+  .founders-badge {
+    max-width: 6.5rem;
+    text-align: right;
   }
 }
