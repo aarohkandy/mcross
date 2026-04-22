@@ -17,6 +17,15 @@ export const metadata: Metadata = {
   title: "MCROSS Roof Cleaning",
   description:
     "Minimal roof cleaning site with a sharp intro animation and a simple quote-first layout.",
+  icons: {
+    icon: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        url: "/mcross-favicon.svg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
