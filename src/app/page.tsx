@@ -35,22 +35,27 @@ export default function Home() {
               <svg
                 aria-hidden="true"
                 className="founders-badge__mark"
-                viewBox="0 0 100 100"
+                viewBox="0 0 512 512"
               >
+                <rect width="512" height="512" rx="92" fill="#061807" />
+                <circle cx="176" cy="88" r="120" fill="#0d3a12" opacity="0.55" />
+                <circle cx="356" cy="404" r="150" fill="#0f3f13" opacity="0.48" />
                 <path
-                  d="M62.7 12.8 22.8 36c-4.4 2.6-4.3 8.9.2 11.4l14 7.7 45.5-26.4c2.2-1.3 3.5-3.6 3.5-6.1V17c0-3.8-4.2-6.2-7.6-4.2H62.7Z"
-                  fill="currentColor"
+                  d="M276 156 458 51c22-13 50 3 50 29v76c0 17-9 33-24 41L329 287 228 229c-24-14-24-49 0-63l48-28Z"
+                  fill="#16ff00"
                 />
                 <path
-                  d="M14.8 47.6c-5.2-3-10.6 3-7.3 8.1l55.2 31.8c4.1 2.4 9.3-.6 9.3-5.3V67.4L27.1 42.1l-12.3 5.5Z"
-                  fill="currentColor"
+                  d="M74 229c-28-16-63 16-47 44l301 174c24 14 54-3 54-31v-78L170 216c-30-17-67-12-96 13Z"
+                  fill="#16ff00"
                 />
                 <path
-                  d="M60.7 43.8 85.4 29.5c4.1-2.4 9.3.6 9.3 5.3v28.4c0 4.7-5.2 7.7-9.3 5.3L60.7 54.2c-4.1-2.3-4.1-8.1 0-10.4Z"
-                  fill="currentColor"
+                  d="M328 219 454 146c24-14 54 3 54 31v157c0 28-30 45-54 31l-126-73c-28-16-28-57 0-73Z"
+                  fill="#16ff00"
                 />
               </svg>
-              <span>Backed by Founders Inc.</span>
+              <span>
+                Backed by <strong>Founders Inc.</strong>
+              </span>
             </div>
           </header>
 

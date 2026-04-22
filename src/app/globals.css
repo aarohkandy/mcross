@@ -164,23 +164,32 @@ a {
 .founders-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.42rem;
-  max-width: 15rem;
-  padding-top: 0.42rem;
-  color: rgba(150, 180, 120, 0.78);
-  font-size: clamp(0.7rem, 0.82vw, 0.82rem);
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  justify-content: flex-end;
+  gap: 0.52rem;
+  padding-top: 0.38rem;
+  color: rgba(183, 210, 152, 0.72);
+  font-size: clamp(0.64rem, 0.74vw, 0.76rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
   line-height: 1;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .founders-badge__mark {
-  width: clamp(1.35rem, 1.8vw, 1.7rem);
-  height: clamp(1.35rem, 1.8vw, 1.7rem);
+  width: clamp(1.45rem, 1.9vw, 1.85rem);
+  height: clamp(1.45rem, 1.9vw, 1.85rem);
   flex: 0 0 auto;
-  color: #19ff08;
-  filter: drop-shadow(0 0 8px rgba(25, 255, 8, 0.16));
+  border-radius: 0.45rem;
+  box-shadow:
+    0 0 0 1px rgba(22, 255, 0, 0.1),
+    0 0 18px rgba(22, 255, 0, 0.1);
+}
+
+.founders-badge strong {
+  color: rgba(245, 245, 239, 0.9);
+  font-weight: 800;
+  letter-spacing: 0.16em;
 }
 
 .form-aura {
@@ -432,9 +441,8 @@ input:-webkit-autofill:focus {
 
   .founders-badge {
     align-self: flex-start;
-    max-width: 12rem;
-    font-size: 0.66rem;
-    letter-spacing: 0.14em;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
   }
 }
 
@@ -444,7 +452,8 @@ input:-webkit-autofill:focus {
   }
 
   .founders-badge {
-    max-width: 6.5rem;
+    align-items: flex-start;
+    white-space: normal;
     text-align: right;
   }
 }
