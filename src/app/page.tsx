@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { IntroSplash } from "@/components/intro-splash";
 import { ContactForm } from "@/components/contact-form";
 import { HeroBackdrop } from "@/components/hero-backdrop";
@@ -32,27 +33,14 @@ export default function Home() {
             </div>
 
             <div className="founders-badge" aria-label="Backed by Founders Inc.">
-              <svg
+              <Image
+                alt=""
                 aria-hidden="true"
                 className="founders-badge__mark"
-                viewBox="0 0 512 512"
-              >
-                <rect width="512" height="512" rx="92" fill="#061807" />
-                <circle cx="176" cy="88" r="120" fill="#0d3a12" opacity="0.55" />
-                <circle cx="356" cy="404" r="150" fill="#0f3f13" opacity="0.48" />
-                <path
-                  d="M276 156 458 51c22-13 50 3 50 29v76c0 17-9 33-24 41L329 287 228 229c-24-14-24-49 0-63l48-28Z"
-                  fill="#16ff00"
-                />
-                <path
-                  d="M74 229c-28-16-63 16-47 44l301 174c24 14 54-3 54-31v-78L170 216c-30-17-67-12-96 13Z"
-                  fill="#16ff00"
-                />
-                <path
-                  d="M328 219 454 146c24-14 54 3 54 31v157c0 28-30 45-54 31l-126-73c-28-16-28-57 0-73Z"
-                  fill="#16ff00"
-                />
-              </svg>
+                height={42}
+                src="/founders-inc-mark.svg"
+                width={42}
+              />
               <span>
                 Backed by <strong>Founders Inc.</strong>
               </span>

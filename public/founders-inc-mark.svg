@@ -1,0 +1,32 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="texture" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.03 0 0 0 0 0.16 0 0 0 0 0.04 0 0 0 0.45 0"/>
+    </filter>
+    <radialGradient id="moss" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(206 195) rotate(89) scale(245 245)">
+      <stop stop-color="#103f13"/>
+      <stop offset="0.52" stop-color="#08240a"/>
+      <stop offset="1" stop-color="#021003"/>
+    </radialGradient>
+    <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.07 0 0 0 0 1 0 0 0 0 0 0 0 0 0.45 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#moss)"/>
+  <rect width="400" height="400" filter="url(#texture)" opacity="0.8"/>
+  <g opacity="0.28">
+    <path d="M12 217C87 152 122 151 200 195C279 239 332 221 395 159V400H0L12 217Z" fill="#16541A"/>
+    <path d="M39 27C116 76 172 75 236 39C298 4 347 0 400 16V0H0V40C12 34 25 30 39 27Z" fill="#125317"/>
+  </g>
+  <g filter="url(#softGlow)" fill="#16FF00">
+    <path d="M278 62L139 143C131 148 131 160 139 165L180 188L306 115V68C306 62 299 58 294 61L278 62Z"/>
+    <path d="M96 174L58 195C52 198 52 207 58 210L282 339C293 345 306 337 306 325V294L98 174H96Z"/>
+    <path d="M219 198L296 153C301 150 306 154 306 160V241C306 247 301 251 296 248L219 204C216 202 216 200 219 198Z"/>
+  </g>
+</svg>
