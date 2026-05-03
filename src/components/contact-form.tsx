@@ -35,11 +35,9 @@ type ContactLinkCardProps = {
   label: string;
   value: string;
   valueClassName?: string;
-  action: string;
 };
 
 function ContactLinkCard({
-  action,
   href,
   label,
   value,
@@ -59,9 +57,6 @@ function ContactLinkCard({
             {value}
           </p>
         </div>
-        <span className="contact-panel__contact-pill rounded-full border border-white/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.28em] text-white/62 transition group-hover:border-[rgba(150,180,120,0.35)] group-hover:text-white">
-          {action}
-        </span>
       </div>
     </a>
   );
@@ -197,14 +192,12 @@ export function ContactForm({
 
       <div className="contact-panel__links mt-4 grid gap-3">
         <ContactLinkCard
-          action="Now"
           href={phoneHref}
           label="Call"
           value={phoneDisplay}
           valueClassName="tracking-[0.12em]"
         />
         <ContactLinkCard
-          action="Open"
           href={`mailto:${email}`}
           label="Email"
           value={email}
