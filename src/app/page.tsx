@@ -12,6 +12,12 @@ const business = {
 
 const heroLines = ["Roof Cleaning,", "Faster, Cheaper,", "Better."] as const;
 
+const disclaimers = [
+  "Estimates are not final until MCROSS reviews the property, confirms access, roof condition, safety, and scope. Service may be rescheduled or declined for weather, unsafe conditions, fragile materials, active leaks, or pre-existing damage.",
+  "Cleaning results vary by roof age, material, staining, moss or algae depth, drainage, and prior maintenance. MCROSS does not guarantee complete stain removal, roof restoration, manufacturer warranty coverage, or correction of pre-existing issues.",
+  "By submitting, you agree MCROSS may contact you about your request by phone, email, or text. Consent is not required to purchase. Message and data rates may apply. Reply STOP to opt out of texts.",
+] as const;
+
 export default function Home() {
   return (
     <>
@@ -72,6 +78,15 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <footer className="site-disclaimer relative z-10" aria-label="Service disclaimers">
+            <p className="site-disclaimer__label">Important service notes</p>
+            <div className="site-disclaimer__copy">
+              {disclaimers.map((disclaimer) => (
+                <p key={disclaimer}>{disclaimer}</p>
+              ))}
+            </div>
+          </footer>
         </section>
       </main>
     </>
