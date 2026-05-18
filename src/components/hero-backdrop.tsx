@@ -6,7 +6,8 @@ export function HeroBackdrop() {
       <div className="hero-backdrop__field hero-backdrop__field--base" />
       <div className="hero-backdrop__field hero-backdrop__field--glow" />
       <div className="hero-backdrop__mesh" />
-      <div className="hero-backdrop__life">
+      <div className="hero-backdrop__life" data-ready="false">
+        <div className="hero-backdrop__life-preview" />
         <HeroLife />
       </div>
       <div className="hero-backdrop__grain" />

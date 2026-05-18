@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { shouldMinimizeEffects } from "@/lib/should-minimize-effects";
 
 type WashSection = {
   curveDepth: number;
@@ -12,7 +13,8 @@ type WashSection = {
 };
 
 const introTiming = {
-  durationMs: 1180,
+  durationMs: 980,
+  maxDevicePixelRatio: 1.35,
 } as const;
 
 function randomBetween(min: number, max: number) {
@@ -102,6 +104,16 @@ export function IntroSplash() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (shouldMinimizeEffects(reducedMotion)) {
+      const frameId = window.requestAnimationFrame(() => {
+        setVisible(false);
+      });
+
+      return () => window.cancelAnimationFrame(frameId);
+    }
+
     const timer = window.setTimeout(() => {
       setVisible(false);
     }, introTiming.durationMs);
@@ -122,9 +134,9 @@ export function IntroSplash() {
       return;
     }
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (mediaQuery.matches) {
+    if (shouldMinimizeEffects(reducedMotion)) {
       return;
     }
 
@@ -136,7 +148,10 @@ export function IntroSplash() {
 
     const resizeCanvas = () => {
       const bounds = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(
+        window.devicePixelRatio || 1,
+        introTiming.maxDevicePixelRatio
+      );
 
       viewport = { height: bounds.height, width: bounds.width };
       canvas.width = Math.max(1, Math.round(bounds.width * dpr));

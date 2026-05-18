@@ -67,7 +67,7 @@ a {
 
 @keyframes intro-overlay-hide {
   0%,
-  84% {
+  68% {
     opacity: 1;
   }
   100% {
@@ -129,13 +129,33 @@ a {
   position: absolute;
   inset: 0;
   opacity: 0.22;
+  overflow: hidden;
   -webkit-mask-image:
     radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.28) 78%, transparent 100%);
   mask-image:
     radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.82) 48%, rgba(0, 0, 0, 0.28) 78%, transparent 100%);
 }
 
+.hero-backdrop__life-preview {
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat url("/life-preview.svg");
+  opacity: 0.72;
+  transform: scale(1.01);
+  filter: blur(0.35px);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
+}
+
+.hero-backdrop__life[data-ready="true"] .hero-backdrop__life-preview {
+  opacity: 0;
+  transform: scale(1);
+}
+
 .hero-life-canvas {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
@@ -447,6 +467,22 @@ input:-webkit-autofill:focus {
 }
 
 @media (max-width: 639px) {
+  .site-shell {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .site-shell > section {
+    overflow: visible;
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+  }
+
+  .hero-layout {
+    min-height: auto;
+    padding-bottom: clamp(2.5rem, 9svh, 4.5rem);
+  }
+
   .hero-lockup {
     max-width: 8.8ch;
   }
